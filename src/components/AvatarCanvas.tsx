@@ -2,9 +2,10 @@ import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react
 
 interface AvatarCanvasProps {
   hairStyle: string;
+  skinColor: string;
 }
 
-const AvatarCanvas = forwardRef(({ hairStyle }: AvatarCanvasProps, ref) => {
+const AvatarCanvas = forwardRef(({ hairStyle, skinColor }: AvatarCanvasProps, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -29,7 +30,7 @@ const AvatarCanvas = forwardRef(({ hairStyle }: AvatarCanvasProps, ref) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw face
-    ctx.fillStyle = '#FFDAB9';
+    ctx.fillStyle = skinColor;
     ctx.beginPath();
     ctx.arc(150, 150, 100, 0, Math.PI * 2, true);
     ctx.fill();
@@ -57,9 +58,9 @@ const AvatarCanvas = forwardRef(({ hairStyle }: AvatarCanvasProps, ref) => {
     } else if (hairStyle === 'bald') {
       // No hair to draw
     }
-  }, [hairStyle]);
+  }, [hairStyle, skinColor]);
 
-  return <canvas ref={canvasRef} width={300} height={300} style={{ border: '1px solid #000' }} />;
+  return <canvas ref={canvasRef} width={300} height={300}  />;
 });
 
 AvatarCanvas.displayName = 'AvatarCanvas';

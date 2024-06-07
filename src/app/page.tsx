@@ -6,11 +6,11 @@ import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineCha
 import { mintWithSignature } from "thirdweb/extensions/erc721";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import Image from "next/image";
-import thirdwebIcon from "@public/thirdweb.svg";
 import { createWallet } from "thirdweb/wallets";
 import { baseSepolia } from "thirdweb/chains";
 import AvatarCanvas from "../components/AvatarCanvas";
 import styles from "../styles/Home.module.css";
+import { Sketch } from "@uiw/react-color";
 
 const NFT_COLLECTION_ADDRESS = "0x92F2666443EBFa7129f39c9E43758B33CD5D73F8";
 
@@ -29,6 +29,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [nftName, setNftName] = useState<string>("");
   const [hairStyle, setHairStyle] = useState<string>("short");
+  const [skinColor, setSkinColor] = useState<string>("#FFDAB9");
   const canvasRef = useRef<any>();
 
   useEffect(() => {
@@ -183,7 +184,17 @@ export default function Home() {
             </label>
           </div>
 
-          <AvatarCanvas hairStyle={hairStyle} ref={canvasRef} />
+          <div className={styles.colorPicker}>
+            <label>Skin Color:</label>
+            <Sketch
+              color={skinColor}
+              onChange={(color) => setSkinColor(color.hex)}
+            />
+          </div>
+
+          <div className={styles.canvasContainer}>
+            <AvatarCanvas hairStyle={hairStyle} skinColor={skinColor} ref={canvasRef} />
+          </div>
         </div>
 
         <div style={{ marginTop: 24 }}>
@@ -210,24 +221,12 @@ export default function Home() {
 function Header() {
   return (
     <header className="flex flex-col items-center mb-20 md:mb-20">
-      <Image
-        src={thirdwebIcon}
-        alt=""
-        className={styles.size150px}
-      />
-
       <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-zinc-100">
-        thirdweb SDK
-        <span className="text-zinc-300 inline-block mx-1"> + </span>
-        <span className="inline-block -skew-x-6 text-blue-500"> Next.js </span>
+        Avatar Minting App
       </h1>
 
       <p className="text-zinc-300 text-base">
-        Read the{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          README.md
-        </code>{" "}
-        file to get started.
+        Create and mint your own custom avatars!
       </p>
     </header>
   );
