@@ -1,0 +1,118 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .explain {
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #ccc;
+  }
+  
+  .divider {
+    width: 100%;
+    border: 1px solid #444;
+    margin: 2rem 0;
+  }
+  
+  .collectionContainer {
+    background: #222;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .ourCollection {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  
+  .textInput {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #333;
+    color: #fff;
+  }
+  
+  .mintButton {
+    padding: 1rem 2rem;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .mintButton:hover {
+    background: #45a049;
+  }
+  
+  .smallDivider {
+    width: 50%;
+    border: 1px solid #444;
+    margin: 2rem 0;
+  }
+  
+  .nftGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .nftItem {
+    background: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .purple {
+    color: #a726a9;
+  }
+  
+  .size150px {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .mdSize150px {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .textZinc100 {
+    color: #f5f5f5;
+  }
+  
+  .textZinc300 {
+    color: #d4d4d4;
+  }
+  
+  .textBlue500 {
+    color: #3b82f6;
+  }
+  
+  .bgZinc800 {
+    background-color: #2d2d2d;
+  }
+  
+  .skewX6 {
+    transform: skewX(-6deg);
+  }
+  

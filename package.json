@@ -9,20 +9,31 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@coinbase/wallet-sdk": "^4.0.3",
+		"@mui/material": "^5.15.19",
+		"@thirdweb-dev/chains": "^0.1.116",
+		"@thirdweb-dev/react": "^4.6.31",
+		"@thirdweb-dev/sdk": "^4.0.92",
+		"@thirdweb-dev/storage": "^2.0.15",
+		"ethers": "5.4.0",
+		"fetch-blob": "^4.0.0",
+		"form-data": "^4.0.0",
+		"next": "14.1.0",
+		"node-fetch": "2",
 		"react": "^18.3",
 		"react-dom": "^18.3",
-		"next": "14.1.0",
 		"thirdweb": "^5"
 	},
 	"devDependencies": {
-		"typescript": "^5",
 		"@types/node": "^20",
+		"@types/node-fetch": "^2.6.11",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
 		"autoprefixer": "^10.0.1",
+		"eslint": "^8",
+		"eslint-config-next": "14.1.0",
 		"postcss": "^8",
 		"tailwindcss": "^3.3.0",
-		"eslint": "^8",
-		"eslint-config-next": "14.1.0"
+		"typescript": "^5"
 	}
 }
