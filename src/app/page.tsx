@@ -10,6 +10,7 @@ import { baseSepolia } from "thirdweb/chains";
 import AvatarCanvas from "../components/AvatarCanvas";
 import styles from "../styles/Home.module.css";
 import { Sketch } from "@uiw/react-color";
+import { resolveName } from "thirdweb/extensions/ens";
 
 const NFT_COLLECTION_ADDRESS = "0x92F2666443EBFa7129f39c9E43758B33CD5D73F8";
 
@@ -29,11 +30,16 @@ export default function Home() {
   const [nftName, setNftName] = useState<string>("");
   const [hairStyle, setHairStyle] = useState<string>("short");
   const [skinColor, setSkinColor] = useState<string>("#FFDAB9");
+  const [bodyShape, setBodyShape] = useState<string>("average");
+  const [mouthShape, setMouthShape] = useState<string>("smile");
+  const [glassesShape, setGlassesShape] = useState<string>("none");
+  const [creatorName, setCreatorName] = useState<string | null>(null);
   const canvasRef = useRef<any>();
 
   useEffect(() => {
     if (account?.address) {
       setWallet(account.address);
+      fetchEnsName(account.address);
     }
   }, [account]);
 
@@ -46,6 +52,23 @@ export default function Home() {
     chain: defineChain(84532),
     address: NFT_COLLECTION_ADDRESS,
   });
+
+  const fetchEnsName = async (address: string) => {
+    try {
+      const ensName = await resolveName({
+        client,
+        address: address,
+      });
+      if (ensName) {
+        setCreatorName(ensName);
+      } else {
+        setCreatorName(address.slice(0, 3) + '...' + address.slice(-3));
+      }
+    } catch (error) {
+      console.error("Error resolving ENS name:", error);
+      setCreatorName(address.slice(0, 3) + '...' + address.slice(-3));
+    }
+  };
 
   async function getSignature(wallet: string, imageUrl: string) {
     try {
@@ -123,6 +146,7 @@ export default function Home() {
 
   const wallets = [
     createWallet("com.coinbase.wallet"),
+    createWallet("io.metamask"),
   ];
 
   return (
@@ -144,35 +168,44 @@ export default function Home() {
             maxLength={26}
             onChange={(e) => setNftName(e.target.value)}
           />
+          {creatorName && <p>Created by: {creatorName}</p>}
 
-          <div className={styles.centered}>
-            <label>
-              <input
-                type="radio"
-                value="short"
-                checked={hairStyle === "short"}
-                onChange={() => setHairStyle("short")}
-              />
-              Short Hair
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="long"
-                checked={hairStyle === "long"}
-                onChange={() => setHairStyle("long")}
-              />
-              Long Hair
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="bald"
-                checked={hairStyle === "bald"}
-                onChange={() => setHairStyle("bald")}
-              />
-              Bald
-            </label>
+          <div className={styles.dropdownContainer}>
+            <label>Hair Style:</label>
+            <select value={hairStyle} onChange={(e) => setHairStyle(e.target.value)}>
+              <option value="short">Short Hair</option>
+              <option value="long">Long Hair</option>
+              <option value="bald">Bald</option>
+              <option value="curly">Curly Hair</option>
+              <option value="straight">Straight Hair</option>
+            </select>
+          </div>
+
+          <div className={styles.dropdownContainer}>
+            <label>Body Shape:</label>
+            <select value={bodyShape} onChange={(e) => setBodyShape(e.target.value)}>
+              <option value="slim">Slim</option>
+              <option value="average">Average</option>
+              <option value="muscular">Muscular</option>
+            </select>
+          </div>
+
+          <div className={styles.dropdownContainer}>
+            <label>Mouth Shape:</label>
+            <select value={mouthShape} onChange={(e) => setMouthShape(e.target.value)}>
+              <option value="smile">Smile</option>
+              <option value="sad">Sad</option>
+              <option value="neutral">Neutral</option>
+            </select>
+          </div>
+
+          <div className={styles.dropdownContainer}>
+            <label>Glasses Shape:</label>
+            <select value={glassesShape} onChange={(e) => setGlassesShape(e.target.value)}>
+              <option value="none">None</option>
+              <option value="round">Round</option>
+              <option value="square">Square</option>
+            </select>
           </div>
 
           <div className={styles.colorPicker}>
@@ -184,7 +217,14 @@ export default function Home() {
           </div>
 
           <div className={styles.canvasContainer}>
-            <AvatarCanvas hairStyle={hairStyle} skinColor={skinColor} ref={canvasRef} />
+            <AvatarCanvas 
+              hairStyle={hairStyle} 
+              skinColor={skinColor} 
+              bodyShape={bodyShape} 
+              mouthShape={mouthShape} 
+              glassesShape={glassesShape} 
+              ref={canvasRef} 
+            />
           </div>
         </div>
 
@@ -196,9 +236,7 @@ export default function Home() {
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      
-
-        
+        <ThirdwebResources />
       </div>
     </main>
   );
@@ -217,7 +255,7 @@ function Header({ client, wallets, chain }: HeaderProps) {
         PGC Beta
       </h1>
 
-      <div className={""}>
+      <div>
       <ConnectButton
         client={client}
         wallets={wallets}
@@ -231,13 +269,12 @@ function Header({ client, wallets, chain }: HeaderProps) {
         connectModal={{
           size: "wide",
           title: "Choose Method",
-          titleIcon: "",
+          titleIcon: "https://media.discordapp.net/attachments/1244435318006874163/1248808384988450888/PGC_Flower_FINAL.png?ex=666502f0&is=6663b170&hm=056d8ff67d67a8995319a18bcac4f1d5a904dcf1be5b2bef0a5ebc71fad07bfc&=&format=webp&quality=lossless",
           welcomeScreen: {
-            subtitle:
-              "Log In Or Sign Up To Get Started",
+            subtitle: "Log In Or Sign Up To Get Started",
             title: "PublicGoodsClub",
             img: {
-              src: "",
+              src: "https://media.discordapp.net/attachments/1244435318006874163/1248808384753434634/PGC_Flower_Logo.png?ex=666502f0&is=6663b170&hm=88b38c7b5a86511dcb2d2e5c6d5c02ecde91dd8a880a65ada02924a5db318d87&=&format=webp&quality=lossless",
               width: 150,
               height: 150,
             },
@@ -245,12 +282,50 @@ function Header({ client, wallets, chain }: HeaderProps) {
           showThirdwebBranding: false,
         }}
       />
-      
       </div>
     </header>
   );
 }
 
+function ThirdwebResources() {
+  return (
+    <div className="grid gap-4 lg:grid-cols-3 justify-center">
+      <ArticleCard
+        title="thirdweb SDK Docs"
+        href="https://portal.thirdweb.com/typescript/v5"
+        description="thirdweb TypeScript SDK documentation"
+      />
 
+      <ArticleCard
+        title="Components and Hooks"
+        href="https://portal.thirdweb.com/typescript/v5/react"
+        description="Learn about the thirdweb React components and hooks in thirdweb SDK"
+      />
 
+      <ArticleCard
+        title="thirdweb Dashboard"
+        href="https://thirdweb.com/dashboard"
+        description="Deploy, configure, and manage your smart contracts from the dashboard."
+      />
+    </div>
+  );
+}
 
+function ArticleCard(props: {
+  title: string;
+  href: string;
+  description: string;
+}) {
+  return (
+    <a
+      href={props.href + "?utm_source=next-template"}
+      target="_blank"
+      className="flex flex-col border border-zinc-800 p-4 rounded-lg hover:bg-zinc-900 transition-colors hover:border-zinc-700"
+    >
+      <article>
+        <h2 className="text-lg font-semibold mb-2">{props.title}</h2>
+        <p className="text-sm text-zinc-400">{props.description}</p>
+      </article>
+    </a>
+  );
+}
