@@ -4,11 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter from next/navigation for App Router
 import { useActiveAccount, ConnectButton } from "thirdweb/react";
 import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineChain, NFT } from "thirdweb";
-import { mintWithSignature, getOwnedNFTs } from "thirdweb/extensions/erc721";
+import { mintWithSignature, getOwnedNFTs, transferFrom } from "thirdweb/extensions/erc721";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { createWallet } from "thirdweb/wallets";
 import { baseSepolia } from "thirdweb/chains";
 import AvatarCanvas from "../components/AvatarCanvas";
+import Modal from "../components/Modal";
 import styles from "../styles/Home.module.css";
 import { Sketch } from "@uiw/react-color";
 import { resolveName } from "thirdweb/extensions/ens";
@@ -40,6 +41,8 @@ export default function Home() {
   const canvasRef = useRef<any>();
   const [activeTab, setActiveTab] = useState<'mint' | 'view'>('mint'); // State for active tab
   const [ownedNFTs, setOwnedNFTs] = useState<NFT[] | null>(null);
+  const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null); // State for selected NFT
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (account?.address) {
@@ -146,6 +149,27 @@ export default function Home() {
       } else {
         setError("An unknown error occurred");
       }
+    }
+  }
+
+  async function transferNFT(recipientAddress: string, tokenId: string) {
+    try {
+      if (!account) {
+        throw new Error("Account is not available");
+      }
+
+      const transaction = transferFrom({
+        contract,
+        from: account.address,
+        to: recipientAddress,
+        tokenId: BigInt(tokenId), // Convert tokenId to bigint
+      });
+      await sendAndConfirmTransaction({ transaction, account });
+      console.log("Transfer successful!");
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error transferring NFT:", error);
+      setError("Error transferring NFT: " + (error as Error).message);
     }
   }
 
@@ -279,7 +303,7 @@ export default function Home() {
             {ownedNFTs && ownedNFTs.length > 0 ? (
               <div className={nftStyles.nftList}>
                 {ownedNFTs.map(nft => (
-                  <div key={nft.id.toString()} className={nftStyles.nftItem}>
+                  <div key={nft.id.toString()} className={nftStyles.nftItem} onClick={() => { setSelectedNFT(nft); setShowModal(true); }}>
                     <div className={nftStyles.nftName}>{nft.metadata.name}</div>
                     {nft.metadata.image && <img src={nft.metadata.image} alt={nft.metadata.name} className={nftStyles.nftImage} />}
                   </div>
@@ -290,6 +314,13 @@ export default function Home() {
             )}
           </div>
         )}
+
+        <Modal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          nft={selectedNFT}
+          onTransfer={transferNFT}
+        />
       </div>
     </main>
   );
