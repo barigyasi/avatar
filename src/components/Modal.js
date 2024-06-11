@@ -5,7 +5,7 @@ const Modal = ({ show, onClose, nft, onTransfer }) => {
   const [recipientAddress, setRecipientAddress] = useState('');
 
   const handleTransfer = () => {
-    if (window.confirm('Are you sure you want to transfer this NFT? This action is irreversible. Please check the recipient address carefully.')) {
+    if (window.confirm('Are you sure you want to transfer this NFT? This action is irreversible. Please check the recipient address carefully. Base Sepolia Network Only')) {
       onTransfer(recipientAddress, nft.id.toString());
     }
   };

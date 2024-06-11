@@ -226,6 +226,7 @@ export default function Home() {
               placeholder="Name of your NFT"
               className={styles.textInput}
               maxLength={26}
+              required
               onChange={(e) => setNftName(e.target.value)}
             />
             {creatorName && <p>Created by: {creatorName}</p>}
