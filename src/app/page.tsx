@@ -11,17 +11,13 @@ import { baseSepolia } from "thirdweb/chains";
 import AvatarCanvas from "../components/AvatarCanvas";
 import Modal from "../components/Modal";
 import styles from "../styles/Home.module.css";
-import { Sketch } from "@uiw/react-color";
 import { resolveName } from "thirdweb/extensions/ens";
 import nftStyles from "../styles/NFTpage.module.css";
 import { resolveImageUrl } from '../utils/resolveImageUrl'; // Adjust the path as needed
 
-
 const NFT_COLLECTION_ADDRESS = "0x92F2666443EBFa7129f39c9E43758B33CD5D73F8";
 const ERC6551_REGISTRY_ADDRESS = "0xF1d73C35BF140c6ad27e1573F67056c3EB0d48E8";
 const ERC6551_ACCOUNT_ADDRESS = "0xE4584236E1C384CDcb541685a5d4E849e3fE15ab";
-
-
 
 export default function Home() {
   const clientId = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
@@ -38,11 +34,10 @@ export default function Home() {
   const [signatureData, setSignatureData] = useState<{ payload: any, signature: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [nftName, setNftName] = useState<string>("");
-  const [hairStyle, setHairStyle] = useState<string>("short");
-  const [skinColor, setSkinColor] = useState<string>("#2E27E6");
-  const [bodyShape, setBodyShape] = useState<string>("average");
-  const [mouthShape, setMouthShape] = useState<string>("smile");
-  const [glassesShape, setGlassesShape] = useState<string>("none");
+  const [eyeImage, setEyeImage] = useState<string>("/avatars/eye/eyes_1.png");
+  const [mouthImage, setMouthImage] = useState<string>("/avatars/mouth/mouth_1.png");
+  const [headImage, setHeadImage] = useState<string>("/avatars/head/rabbit.png");
+  const [topImage, setTopImage] = useState<string>("/avatars/top/blue_top.png");
   const [creatorName, setCreatorName] = useState<string | null>(null);
   const canvasRef = useRef<any>();
   const [activeTab, setActiveTab] = useState<'mint' | 'view'>('mint');
@@ -240,7 +235,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto">
+    <main className={`p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto ${styles.textTransform}`}>
       <div className="py-20">
         <Header
           client={client}
@@ -249,8 +244,8 @@ export default function Home() {
         />
 
         <div className={styles.tabContainer}>
-          <button onClick={() => setActiveTab('mint')} className={activeTab === 'mint' ? styles.activeTab : ''}>Mint NFT</button>
-          <button onClick={() => setActiveTab('view')} className={activeTab === 'view' ? styles.activeTab : ''}>View NFTs</button>
+          <button onClick={() => setActiveTab('mint')} className={`${styles.tabButton} ${activeTab === 'mint' ? styles.activeTab : ''}`}>Mint NFT</button>
+          <button onClick={() => setActiveTab('view')} className={`${styles.tabButton} ${activeTab === 'view' ? styles.activeTab : ''}`}>View NFTs</button>
         </div>
 
         {activeTab === 'mint' && (
@@ -268,58 +263,44 @@ export default function Home() {
             {creatorName && <p>Created by: {creatorName}</p>}
 
             <div className={styles.dropdownContainer}>
-              <label>Hair Style:</label>
-              <select value={hairStyle} onChange={(e) => setHairStyle(e.target.value)}>
-                <option value="short">Short Hair</option>
-                <option value="long">Long Hair</option>
-                <option value="bald">Bald</option>
-                <option value="curly">Curly Hair</option>
-                <option value="straight">Straight Hair</option>
+              <label>Eye Image:</label>
+              <select value={eyeImage} onChange={(e) => setEyeImage(e.target.value)}>
+                <option value="/avatars/eye/eyes_1.png">Eyes 1</option>
+                <option value="/avatars/eye/eyes_2.png">Eyes 2</option>
               </select>
             </div>
 
             <div className={styles.dropdownContainer}>
-              <label>Body Shape:</label>
-              <select value={bodyShape} onChange={(e) => setBodyShape(e.target.value)}>
-                <option value="slim">Slim</option>
-                <option value="average">Average</option>
-                <option value="muscular">Muscular</option>
+              <label>Mouth Image:</label>
+              <select value={mouthImage} onChange={(e) => setMouthImage(e.target.value)}>
+                <option value="/avatars/mouth/mouth_1.png">Mouth 1</option>
+                <option value="/avatars/mouth/mouth_2.png">Mouth 2</option>
               </select>
             </div>
 
             <div className={styles.dropdownContainer}>
-              <label>Mouth Shape:</label>
-              <select value={mouthShape} onChange={(e) => setMouthShape(e.target.value)}>
-                <option value="smile">Smile</option>
-                <option value="sad">Sad</option>
-                <option value="neutral">Neutral</option>
+              <label>Head Image:</label>
+              <select value={headImage} onChange={(e) => setHeadImage(e.target.value)}>
+                <option value="/avatars/head/rabbit.png">Rabbit</option>
+                <option value="/avatars/head/bull.png">Bull</option>
               </select>
             </div>
 
             <div className={styles.dropdownContainer}>
-              <label>Glasses Shape:</label>
-              <select value={glassesShape} onChange={(e) => setGlassesShape(e.target.value)}>
-                <option value="none">None</option>
-                <option value="round">Round</option>
-                <option value="square">Square</option>
+              <label>Top Image:</label>
+              <select value={topImage} onChange={(e) => setTopImage(e.target.value)}>
+                <option value="/avatars/top/bluetop.png">Blue Top</option>
+                <option value="/avatars/top/whitetop.png">White Top</option>
+                <option value="/avatars/top/yellowtop.png">Yellow Top</option>
               </select>
-            </div>
-
-            <div className={styles.colorPicker}>
-              <label>Body Color:</label><br/>
-              <Sketch
-                color={skinColor}
-                onChange={(color) => setSkinColor(color.hex)}
-              />
             </div>
 
             <div className={styles.canvasContainer}>
               <AvatarCanvas 
-                hairStyle={hairStyle} 
-                skinColor={skinColor} 
-                bodyShape={bodyShape} 
-                mouthShape={mouthShape} 
-                glassesShape={glassesShape} 
+                eyeImage={eyeImage}
+                mouthImage={mouthImage}
+                headImage={headImage}
+                topImage={topImage}
                 ref={canvasRef} 
               />
             </div>
@@ -335,22 +316,34 @@ export default function Home() {
         )}
 
         {activeTab === 'view' && (
-          <div className={nftStyles.container}>
-            {/* Render your NFTs */}
-            {ownedNFTs && ownedNFTs.length > 0 ? (
-              <div className={nftStyles.nftList}>
-                {ownedNFTs.map(nft => (
-                  <div key={nft.id.toString()} className={nftStyles.nftItem} onClick={() => { setSelectedNFT(nft); setShowModal(true); }}>
-                    <div className={nftStyles.nftName}>{nft.metadata.name}</div>
-                    {nft.metadata.image && <img src={resolveImageUrl(nft.metadata.image)} alt={nft.metadata.name} className={nftStyles.nftImage} />}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className={nftStyles.noNfts}>No NFTs owned.</div>
-            )}
-          </div>
-        )}
+        <div className={nftStyles.container}>
+          {ownedNFTs && ownedNFTs.length > 0 ? (
+            <div className={nftStyles.nftList}>
+              {ownedNFTs.map(nft => (
+                <div
+                  key={nft.id.toString()}
+                  className={nftStyles.nftItem}
+                  onClick={() => {
+                    setSelectedNFT(nft);
+                    setShowModal(true);
+                  }}
+                >
+                  <div className={nftStyles.nftName}>{nft.metadata.name}</div>
+                  {nft.metadata.image && (
+                    <img
+                      src={resolveImageUrl(nft.metadata.image)}
+                      alt={nft.metadata.name}
+                      className={nftStyles.nftImage}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={nftStyles.noNfts}>No NFTs owned.</div>
+          )}
+        </div>
+      )}
 
         <Modal
           show={showModal}
@@ -391,9 +384,7 @@ function Header({ client, wallets, chain }: HeaderProps) {
           connectModal={{
             size: "wide",
             title: "Choose Method",
-            titleIcon: "https://media.discordapp.net/attachments/1244435318006874163/1248808384988450888/PGC_Flower_FINAL.png?ex=666502f0&is=6663b170&hm=056d8ff67d67a8995319a18bcac4f1d5a904dcf1be5b2bef0a5ebc71fad07bfc&=&format=webp&quality=lossless",
             welcomeScreen: {
-              subtitle: "Log In Or Sign Up To Get Started",
               title: "PublicGoodsClub",
               img: {
                 src: "https://media.discordapp.net/attachments/1244435318006874163/1248808384753434634/PGC_Flower_Logo.png?ex=666502f0&is=6663b170&hm=88b38c7b5a86511dcb2d2e5c6d5c02ecde91dd8a880a65ada02924a5db318d87&=&format=webp&quality=lossless",

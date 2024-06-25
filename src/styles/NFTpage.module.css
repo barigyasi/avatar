@@ -1,61 +1,87 @@
 /* NFTpage.module.css */
 
+/* Font import */
+@font-face {
+  font-family: 'Lineal';
+  src: url('../styles/fonts/Lineal-Light.ttf') format('truetype');
+  font-weight: 300; /* Light */
+}
+@font-face {
+  font-family: 'Lineal';
+  src: url('../styles/fonts/Lineal-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular */
+}
+@font-face {
+  font-family: 'Lineal';
+  src: url('../styles/fonts/Lineal-Bold.ttf') format('truetype');
+  font-weight: 700; /* Bold */
+}
+@font-face {
+  font-family: 'Lineal';
+  src: url('../styles/fonts/Lineal-Thin.ttf') format('truetype');
+  font-weight: 100; /* Thin */
+}
+
 /* Container for the entire component */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
-  
-  /* Loading message style */
-  .loading {
-    font-size: 1.5em;
-    color: #6c757d;
-  }
-  
-  /* Style for the message when no NFTs are owned */
-  .noNfts {
-    font-size: 1.2em;
-    color: #dc3545;
-  }
-  
-  /* List of owned NFTs */
-  .nftList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  /* Individual NFT item style */
-  .nftItem {
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 10px;
-    width: 150px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
-  
-  .nftItem:hover {
-    transform: scale(1.05);
-  }
-  
-  /* NFT name style */
-  .nftName {
-    font-size: 1em;
-    font-weight: bold;
-    color: #343a40;
-    margin-top: 10px;
-  }
-  .nftImage {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #305DF6; 
+  font-family: 'Lineal', sans-serif;
+}
+
+/* Loading message style */
+.loading {
+  font-size: 1.5em;
+  color: #29447b; /* PGC Blue Alt */
+  font-family: 'Lineal-Light', sans-serif;
+}
+
+/* Style for the message when no NFTs are owned */
+.noNfts {
+  font-size: 1.2em;
+  color: #dc3545;
+  font-family: 'Lineal-Bold', sans-serif;
+}
+
+/* List of owned NFTs */
+.nftList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Individual NFT item style */
+.nftItem {
+  background-color: #29447b; /* Base White */
+  border: 1px solid #ffffff; /* PGC Blue Alt */
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  width: 150px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.nftItem:hover {
+  transform: scale(1.05);
+}
+
+/* NFT name style */
+.nftName {
+  font-size: 1em;
+  font-weight: bold;
+  color: #ffffff; /* Dark Gray */
+  margin-top: 10px;
+}
+
+.nftImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+}

@@ -29,8 +29,8 @@
 
 body {
     font-family: 'Lineal', sans-serif;
-    background-color: var(--pgc-blue-main);
-    color: var(--pgc-base-white);
+    background-color: var(--pgc-off-white);
+    color: var(--pgc-black-main);
 }
 
 .textTransform {
