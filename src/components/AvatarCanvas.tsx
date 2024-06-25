@@ -5,9 +5,10 @@ interface AvatarCanvasProps {
   mouthImage: string;
   headImage: string;
   topImage: string;
+  backgroundImage: string;
 }
 
-const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage }: AvatarCanvasProps, ref) => {
+const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, backgroundImage }: AvatarCanvasProps, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -43,14 +44,15 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage }: 
     const scaleFactor = 2.5;
 
     // Draw images with adjusted positions and sizes in the correct order
+    drawImage(backgroundImage, 0, 0, canvas.width, canvas.height); // Background layer
     drawImage(topImage, 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Top layer (clothes)
     drawImage(headImage, 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Head layer
     drawImage(eyeImage, 115 * scaleFactor, 100 * scaleFactor, 70 * scaleFactor, 35 * scaleFactor); // Eyes layer
     drawImage(mouthImage, 125 * scaleFactor, 125 * scaleFactor, 50 * scaleFactor, 25 * scaleFactor); // Mouth layer
 
-  }, [eyeImage, mouthImage, headImage, topImage]);
+  }, [eyeImage, mouthImage, headImage, topImage, backgroundImage]);
 
-  return <canvas ref={canvasRef} width={300 * 2.5} height={500 * 2.5} />;
+  return <canvas ref={canvasRef} width={530} height={500} />;
 });
 
 AvatarCanvas.displayName = 'AvatarCanvas';

@@ -38,6 +38,7 @@ export default function Home() {
   const [mouthImage, setMouthImage] = useState<string>("/avatars/mouth/mouth_1.png");
   const [headImage, setHeadImage] = useState<string>("/avatars/head/rabbit.png");
   const [topImage, setTopImage] = useState<string>("/avatars/top/blue_top.png");
+  const [backgroundImage, setBackgroundImage] = useState<string>("/avatars/background/background1.png");
   const [creatorName, setCreatorName] = useState<string | null>(null);
   const canvasRef = useRef<any>();
   const [activeTab, setActiveTab] = useState<'mint' | 'view'>('mint');
@@ -295,12 +296,22 @@ export default function Home() {
               </select>
             </div>
 
+            <div className={styles.dropdownContainer}>
+              <label>Background Image:</label>
+              <select value={backgroundImage} onChange={(e) => setBackgroundImage(e.target.value)}>
+                <option value="/avatars/background/background1.png">Background 1</option>
+                <option value="/avatars/background/background2.png">Background 2</option>
+                <option value="/avatars/background/background3.png">Background 3</option>
+              </select>
+            </div>
+
             <div className={styles.canvasContainer}>
               <AvatarCanvas 
                 eyeImage={eyeImage}
                 mouthImage={mouthImage}
                 headImage={headImage}
                 topImage={topImage}
+                backgroundImage={backgroundImage}
                 ref={canvasRef} 
               />
             </div>
