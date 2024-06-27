@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           to: authorAddress,
           metadata: {
             name: nftName,
-            description: "This is my Avatar",
+            description: "Public Goods Club",
             image: image,
           },
           price: "0.0015",
