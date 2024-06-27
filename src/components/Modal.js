@@ -92,6 +92,36 @@ const Modal = ({ show, onClose, nft, onTransfer, onCreateTokenBoundAccount }) =>
         <button onClick={handleTransfer} className={styles.transferButton}>
           Transfer NFT
         </button>
+
+        <input
+          type="number"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
+          className={styles.input}
+        />
+        <button onClick={handleWithdraw} className={styles.withdrawButton}>
+          Withdraw Funds
+        </button>
+        <button onClick={handleTransferFunds} className={styles.transferButton}>
+          Transfer Funds
+        </button>
+
+        <input
+          type="text"
+          placeholder="New Account Name"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+          className={styles.input}
+        />
+        <button onClick={handleSetAccountName} className={styles.setNameButton}>
+          Set Account Name
+        </button>
+
+        <button onClick={() => onCreateTokenBoundAccount(nft.id.toString())} className={styles.createAccountButton}>
+          Create Token Bound Account
+        </button>
+ 
  
       </div>
     </div>
