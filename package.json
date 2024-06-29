@@ -3,12 +3,13 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint",
-		"migrate": "prisma migrate deploy"
-	},
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "prisma:migrate": "prisma migrate deploy",
+  "postinstall": "prisma generate && prisma migrate deploy"
+},
+
 	"dependencies": {
 		"@coinbase/wallet-sdk": "^4.0.3",
 		"@headlessui/react": "^2.1.1",
