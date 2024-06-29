@@ -268,7 +268,6 @@ export default function Home() {
             topImage={topImage}
             backgroundImage={backgroundImage}
             ref={canvasRef}
-            className="w-full max-w-xs"
           />
         </div>
 
