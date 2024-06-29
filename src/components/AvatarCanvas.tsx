@@ -54,30 +54,53 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
         loadImage(mouthImage)
       ]);
 
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+
+      // Recorded coordinates
+      const coords = {
+        topImageX: 0, // Update with your final value
+        topImageY: -0, // Update with your final value
+        headX: 0, // Update with your final value
+        headY: 40, // Update with your final value
+        eyeX: 0, // Update with your final value
+        eyeY: 80, // Update with your final value
+        mouthX: 0, // Update with your final value
+        mouthY: 60 // Update with your final value
+      };
+
+      const headWidth = 200 * scaleFactor;
+      const headHeight = 200 * scaleFactor;
+      const headX = (canvasWidth - headWidth) / 2 + coords.headX;
+      const headY = (canvasHeight - headHeight) / 2 + coords.headY;
+
+      const topImageWidth = 200 * scaleFactor;
+      const topImageHeight = 200 * scaleFactor;
+      const topImageX = (canvasWidth - topImageWidth) / 2 + coords.topImageX;
+      const topImageY = canvasHeight - topImageHeight + coords.topImageY;
+
       ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height); // Background layer
-      ctx.drawImage(images[1], 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Top layer (clothes)
-      ctx.drawImage(images[2], 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Head layer
+      ctx.drawImage(images[1], topImageX, topImageY, topImageWidth, topImageHeight); // Top layer (clothes)
+      ctx.drawImage(images[2], headX, headY, headWidth, headHeight); // Head layer
 
       // Eyes layer with increased size and adjusted position
-      const eyeOriginalX = 115 * scaleFactor;
-      const eyeOriginalY = 100 * scaleFactor;
-      const eyeOriginalWidth = 70 * scaleFactor;
-      const eyeOriginalHeight = 35 * scaleFactor;
-      const eyeX = eyeOriginalX - (eyeScaleFactor - 1) * eyeOriginalWidth / 2;
-      const eyeY = eyeOriginalY - (eyeScaleFactor - 1) * eyeOriginalHeight / 2;
+      const eyeOriginalWidth = 90 * scaleFactor;
+      const eyeOriginalHeight = 55 * scaleFactor;
       const eyeWidth = eyeOriginalWidth * eyeScaleFactor;
       const eyeHeight = eyeOriginalHeight * eyeScaleFactor;
+      const eyeX = headX + (headWidth - eyeWidth) / 2 + coords.eyeX;
+      const eyeY = headY + 40 + coords.eyeY; // Adjusted y position
+
       ctx.drawImage(images[3], eyeX, eyeY, eyeWidth, eyeHeight); 
 
       // Mouth layer with increased size and adjusted position
-      const mouthOriginalX = 125 * scaleFactor;
-      const mouthOriginalY = 125 * scaleFactor;
-      const mouthOriginalWidth = 50 * scaleFactor;
-      const mouthOriginalHeight = 25 * scaleFactor;
-      const mouthX = mouthOriginalX - (mouthScaleFactor - 1) * mouthOriginalWidth / 2;
-      const mouthY = mouthOriginalY - (mouthScaleFactor - 1) * mouthOriginalHeight / 2;
+      const mouthOriginalWidth = 70 * scaleFactor;
+      const mouthOriginalHeight = 45 * scaleFactor;
       const mouthWidth = mouthOriginalWidth * mouthScaleFactor;
       const mouthHeight = mouthOriginalHeight * mouthScaleFactor;
+      const mouthX = headX + (headWidth - mouthWidth) / 2 + coords.mouthX;
+      const mouthY = headY + 90 + coords.mouthY; // Adjusted y position
+
       ctx.drawImage(images[4], mouthX, mouthY, mouthWidth, mouthHeight); 
     };
 
