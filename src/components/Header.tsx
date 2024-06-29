@@ -6,11 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "next-themes";
-import { ConnectWallet } from "@thirdweb-dev/react";
 import MobileNavigation from "./MobileNavigation";
 import { ConnectButton } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { createThirdwebClient, defineChain } from "thirdweb";
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
@@ -73,7 +72,7 @@ export function Header() {
               <ConnectButton
                 client={client}
                 wallets={wallets}
-                chain={defineChain(baseSepolia)}
+                chain={defineChain(base)}
                 theme={"dark"}
                 appMetadata={{
                   name: "Avatar",

@@ -9,7 +9,7 @@ import { createWallet, injectedProvider } from "thirdweb/wallets";
 import { WalletId } from "thirdweb/wallets";
 import { getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import { SmartWalletOptions } from "thirdweb/wallets";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import {
     implementation,
     nftDropAddress,
@@ -72,7 +72,7 @@ export const fetchNFTs = async (walletAddress: string, contract: Readonly<Contra
 
 export const newSmartWallet = (token_bound_address: string) => {
     const config: SmartWalletOptions = {
-        chain: baseSepolia,
+        chain: base,
         sponsorGas: true,
         factoryAddress: factoryAddress,
         overrides: {
@@ -128,19 +128,19 @@ export const client = createThirdwebClient({
 
 export const bounded_token_contract = getContract({
     client,
-    chain: baseSepolia,
+    chain: base,
     address: NFT_COLLECTION_ADDRESS!,
 });
 
 export const registry_contract = getContract({
     client,
-    chain: baseSepolia,
+    chain: base,
     address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS || "",
 });
 
 export const pgc_1155_id_contract = getContract({
     client,
-    chain: baseSepolia,
+    chain: base,
     address: process.env.NEXT_PUBLIC_ID_NFT || "", // deploy a drop contract from thirdweb.com/explore
 });
 

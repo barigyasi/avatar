@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 //import { ConnectWallet } from "@thirdweb-dev/react";
 import { useTheme } from "next-themes";
 import { darkTheme, lightTheme } from "thirdweb/react";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { client, wallets } from "../components/const/utils";
 import { defineChain } from "thirdweb";
 import { ConnectButton } from "thirdweb/react";
@@ -122,7 +122,7 @@ export default function MobileNavigation() {
               <ConnectButton
                 client={client}
                 wallets={wallets}
-                chain={defineChain(baseSepolia)}
+                chain={defineChain(base)}
                 theme={"dark"}
                 appMetadata={{
                   name: "PGC Members",
