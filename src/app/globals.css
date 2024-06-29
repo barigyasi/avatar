@@ -1,3 +1,9 @@
+/* Import Tailwind's base, components, and utilities layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Tailwind's base, components, and utilities layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -115,7 +121,7 @@
 
 @keyframes cascadeDown {
   0% { transform: translateY(-50px); opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; } /* 100vh ensures the emojis fall off the screen */
+  100% { transform: translateY(100vh); opacity: 0; }
 }
 
 .randomize-button {
@@ -132,27 +138,34 @@
 }
 
 .fire-emoji, .flower-emoji {
-  position: fixed; /* Use fixed positioning to avoid affecting the document flow */
-  width: 24px; /* Adjust the size as needed */
-  height: 24px; /* Adjust the size as needed */
+  position: fixed;
+  width: 24px;
+  height: 24px;
   animation: fadeInOut 1s, cascadeDown 2s;
   pointer-events: none;
-  z-index: 9999; /* Ensure emojis appear above other content */
+  z-index: 9999;
 }
 
 .notification {
   position: fixed;
   top: 20px;
   right: 20px;
-  background-color: #4caf50; /* Green */
+  background-color: #4caf50;
   color: white;
-  padding: 8px 16px; /* Adjust the padding to make the notification shorter */
+  padding: 8px 16px;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  z-index: 10000; /* Ensure notifications appear above everything */
-  animation: fadeInOut 3s; /* Adjust the fade in/out timing */
+  z-index: 10000;
+  animation: fadeInOut 3s;
 }
 
 .notification.error {
-  background-color: #f44336; /* Red for errors */
+  background-color: #f44336;
+}
+
+@media (max-width: 640px) {
+  .randomize-button {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }

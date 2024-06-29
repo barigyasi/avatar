@@ -34,20 +34,20 @@ export default function Home() {
   const [topImage, setTopImage] = useState<string>("");
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [creatorName, setCreatorName] = useState<string | null>(null);
-  const [clickCount, setClickCount] = useState<number>(0); // State for the click count
-  const [loading, setLoading] = useState<boolean>(true); // State for loading
-  const [buttonPresses, setButtonPresses] = useState<number>(0); // Track button presses
-  const [showNotification, setShowNotification] = useState<boolean>(false); // Track notification
-  const [showError, setShowError] = useState<boolean>(false); // Track error notification
+  const [clickCount, setClickCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [buttonPresses, setButtonPresses] = useState<number>(0);
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
   const canvasRef = useRef<any>();
 
   useEffect(() => {
-    initializeAvatar(); // Set initial random avatar images without incrementing count
+    initializeAvatar();
     if (account?.address) {
       setWallet(account.address);
       fetchEnsName(account.address);
     }
-    fetchClickCount(); // Fetch the initial click count
+    fetchClickCount();
   }, [account]);
 
   const client = createThirdwebClient({
@@ -118,7 +118,7 @@ export default function Home() {
       console.error("Error fetching signature:", error);
       setError(`Error fetching signature: ${error instanceof Error ? error.message : "Unknown error"}`);
       setShowError(true);
-      setTimeout(() => setShowError(false), 15000); // Hide error notification after 15 seconds
+      setTimeout(() => setShowError(false), 15000);
       throw error;
     }
   }
@@ -165,14 +165,14 @@ export default function Home() {
 
       await sendAndConfirmTransaction({ transaction, account });
       console.log("Minting successful!");
-      showFlowerEmojis(); // Show flower emojis
-      setShowNotification(true); // Show success notification
-      setTimeout(() => setShowNotification(false), 3000); // Hide notification after 3 seconds
+      showFlowerEmojis();
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3000);
     } catch (error: unknown) {
       console.error("Error minting NFT:", error);
       setError(`Error minting NFT: ${error instanceof Error ? error.message : "Unknown error"}`);
       setShowError(true);
-      setTimeout(() => setShowError(false), 15000); // Hide error notification after 15 seconds
+      setTimeout(() => setShowError(false), 15000);
     }
   }
 
@@ -200,34 +200,30 @@ export default function Home() {
 
   const randomizeAvatar = () => {
     initializeAvatar();
-    incrementClickCount(); // Increment the click count only when button is clicked
-    setButtonPresses((prev) => prev + 1); // Increment button presses
+    incrementClickCount();
+    setButtonPresses((prev) => prev + 1);
 
     safelyInteractWithElement('.randomize-button', (button) => {
       if (buttonPresses >= 5) {
-        // Change button color to red
         button.classList.add('red');
       }
       if (buttonPresses >= 10) {
-        // Shake the button
         button.classList.add('shake');
-        // Add multiple rows of fire emojis
-        for (let j = 0; j < 4; j++) { // Create 4 rows of fire emojis
+        for (let j = 0; j < 4; j++) {
           setTimeout(() => {
-            for (let i = 0; i < 10; i++) { // 10 fire emojis per row
+            for (let i = 0; i < 10; i++) {
               const fireEmoji = document.createElement('div');
               fireEmoji.className = 'fire-emoji';
               fireEmoji.style.left = `${Math.random() * 100}%`;
-              fireEmoji.style.top = '0px'; // Start from the top of the screen
+              fireEmoji.style.top = '0px';
               fireEmoji.innerText = '🔥';
               document.body.appendChild(fireEmoji);
               setTimeout(() => {
                 fireEmoji.remove();
               }, 2000);
             }
-          }, j * 500); // Stagger each row by 500ms
+          }, j * 500);
         }
-        // Reset button color back to blue
         setTimeout(() => {
           button.classList.remove('red');
         }, 3000);
@@ -236,12 +232,12 @@ export default function Home() {
   };
 
   const showFlowerEmojis = () => {
-    for (let i = 0; i < 25; i++) { // Adjust the number of flowers if needed
+    for (let i = 0; i < 25; i++) {
       const flowerEmoji = document.createElement('img');
       flowerEmoji.className = 'flower-emoji';
       flowerEmoji.style.left = `${Math.random() * 100}%`;
-      flowerEmoji.style.top = '0px'; // Start from the top of the screen
-      flowerEmoji.src = '/PGC_Flower_ALL_BLUE.png'; // Use the flower logo
+      flowerEmoji.style.top = '0px';
+      flowerEmoji.src = '/PGC_Flower_ALL_BLUE.png';
       document.body.appendChild(flowerEmoji);
       setTimeout(() => {
         flowerEmoji.remove();
@@ -250,8 +246,8 @@ export default function Home() {
   };
 
   return (
-    <Container className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900"> {/* Add bg-white and dark:bg-gray-900 */}
-      <div className="py-20 max-w-xl mx-auto">
+    <Container className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+      <div className="py-20 max-w-xl mx-auto px-4">
         <h2 className="text-3xl mb-6 text-center font-lineal">Mint Your Public Goodies:</h2>
         <input
           type="text"
@@ -264,7 +260,7 @@ export default function Home() {
         />
         {creatorName && <p className="text-center mb-4 font-lineal">minted by: {creatorName}</p>}
 
-        <div className="mb-6">
+        <div className="mb-6 flex justify-center">
           <AvatarCanvas
             eyeImage={eyeImage}
             mouthImage={mouthImage}
@@ -272,14 +268,15 @@ export default function Home() {
             topImage={topImage}
             backgroundImage={backgroundImage}
             ref={canvasRef}
+            className="w-full max-w-xs"
           />
         </div>
 
         <div className="text-center">
-          <button onClick={randomizeAvatar} disabled={loading} className="px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800 mr-4 randomize-button">
+          <button onClick={randomizeAvatar} disabled={loading} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800 mr-4 randomize-button">
             Randomize
           </button>
-          <button onClick={mint} className="px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800">
+          <button onClick={mint} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800">
             Mint NFT
           </button>
         </div>
