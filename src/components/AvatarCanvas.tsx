@@ -43,6 +43,9 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
 
     const drawImages = async () => {
       const scaleFactor = 2.5;
+      const eyeScaleFactor = 1.5; // Adjusted scale factor for the eyes
+      const mouthScaleFactor = 2.5; // Adjusted scale factor for the mouth
+
       const images = await Promise.all([
         loadImage(backgroundImage),
         loadImage(topImage),
@@ -54,8 +57,28 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
       ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height); // Background layer
       ctx.drawImage(images[1], 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Top layer (clothes)
       ctx.drawImage(images[2], 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Head layer
-      ctx.drawImage(images[3], 115 * scaleFactor, 100 * scaleFactor, 70 * scaleFactor, 35 * scaleFactor); // Eyes layer
-      ctx.drawImage(images[4], 125 * scaleFactor, 125 * scaleFactor, 50 * scaleFactor, 25 * scaleFactor); // Mouth layer
+
+      // Eyes layer with increased size and adjusted position
+      const eyeOriginalX = 115 * scaleFactor;
+      const eyeOriginalY = 100 * scaleFactor;
+      const eyeOriginalWidth = 70 * scaleFactor;
+      const eyeOriginalHeight = 35 * scaleFactor;
+      const eyeX = eyeOriginalX - (eyeScaleFactor - 1) * eyeOriginalWidth / 2;
+      const eyeY = eyeOriginalY - (eyeScaleFactor - 1) * eyeOriginalHeight / 2;
+      const eyeWidth = eyeOriginalWidth * eyeScaleFactor;
+      const eyeHeight = eyeOriginalHeight * eyeScaleFactor;
+      ctx.drawImage(images[3], eyeX, eyeY, eyeWidth, eyeHeight); 
+
+      // Mouth layer with increased size and adjusted position
+      const mouthOriginalX = 125 * scaleFactor;
+      const mouthOriginalY = 125 * scaleFactor;
+      const mouthOriginalWidth = 50 * scaleFactor;
+      const mouthOriginalHeight = 25 * scaleFactor;
+      const mouthX = mouthOriginalX - (mouthScaleFactor - 1) * mouthOriginalWidth / 2;
+      const mouthY = mouthOriginalY - (mouthScaleFactor - 1) * mouthOriginalHeight / 2;
+      const mouthWidth = mouthOriginalWidth * mouthScaleFactor;
+      const mouthHeight = mouthOriginalHeight * mouthScaleFactor;
+      ctx.drawImage(images[4], mouthX, mouthY, mouthWidth, mouthHeight); 
     };
 
     drawImages();
