@@ -52,7 +52,7 @@ export function Header() {
               </div>
             </Link>
           </div>
-          <div className="hidden md:flex md:gap-x-6 text-white">
+          <div className="hidden md:flex md:gap-x-6 text-white font-lineal">
             <NavLink href="https://x.com/PublicGoodsClub" target="_blank">
               Community
             </NavLink>
@@ -65,7 +65,7 @@ export function Header() {
             <NavLink 
             href="https://pg-club.netlify.app/"
             target="_blank"
-            > Inventory</NavLink>
+            > View Inventory</NavLink>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">

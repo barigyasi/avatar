@@ -1,20 +1,17 @@
-"use client";
+"use client"
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useActiveAccount, ConnectButton } from "thirdweb/react";
-import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineChain,  prepareContractCall, sendTransaction } from "thirdweb";
+import { useActiveAccount } from "thirdweb/react";
+import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineChain, prepareContractCall, sendTransaction } from "thirdweb";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { createWallet } from "thirdweb/wallets";
-import { baseSepolia } from "thirdweb/chains";
-import AvatarCanvas from "../components/AvatarCanvas";
-import { Container } from "../components/Container";
 import { resolveName } from "thirdweb/extensions/ens";
 import { mintWithSignature } from "thirdweb/extensions/erc721";
+import AvatarCanvas from "../components/AvatarCanvas";
+import { Container } from "../components/Container";
 
 const NFT_COLLECTION_ADDRESS = "0x92F2666443EBFa7129f39c9E43758B33CD5D73F8";
-const ERC6551_REGISTRY_ADDRESS = "0xF1d73C35BF140c6ad27e1573F67056c3EB0d48E8";
-const ERC6551_ACCOUNT_ADDRESS = "0xE4584236E1C384CDcb541685a5d4E849e3fE15ab";
 
 export default function Home() {
   const clientId = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
@@ -31,16 +28,17 @@ export default function Home() {
   const [signatureData, setSignatureData] = useState<{ payload: any, signature: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [nftName, setNftName] = useState<string>("");
-  const [eyeImage, setEyeImage] = useState<string>("/avatars/eye/eyes_1.png");
-  const [mouthImage, setMouthImage] = useState<string>("/avatars/mouth/mouth_1.png");
-  const [headImage, setHeadImage] = useState<string>("/avatars/head/rabbit.png");
-  const [topImage, setTopImage] = useState<string>("/avatars/top/blue_top.png");
-  const [backgroundImage, setBackgroundImage] = useState<string>("/avatars/background/background1.png");
+  const [eyeImage, setEyeImage] = useState<string>("");
+  const [mouthImage, setMouthImage] = useState<string>("");
+  const [headImage, setHeadImage] = useState<string>("");
+  const [topImage, setTopImage] = useState<string>("");
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [creatorName, setCreatorName] = useState<string | null>(null);
   const canvasRef = useRef<any>();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    randomizeAvatar(); // Set initial random avatar images
     if (account?.address) {
       setWallet(account.address);
       fetchEnsName(account.address);
@@ -63,14 +61,10 @@ export default function Home() {
         client,
         address: address,
       });
-      if (ensName) {
-        setCreatorName(ensName);
-      } else {
-        setCreatorName(address.slice(0, 3) + '...' + address.slice(-3));
-      }
+      setCreatorName(ensName || `${address.slice(0, 3)}...${address.slice(-3)}`);
     } catch (error) {
       console.error("Error resolving ENS name:", error);
-      setCreatorName(address.slice(0, 3) + '...' + address.slice(-3));
+      setCreatorName(`${address.slice(0, 3)}...${address.slice(-3)}`);
     }
   };
 
@@ -94,7 +88,7 @@ export default function Home() {
       return response.json();
     } catch (error) {
       console.error("Error fetching signature:", error);
-      setError("Error fetching signature: " + (error as Error).message);
+      setError(`Error fetching signature: ${error instanceof Error ? error.message : "Unknown error"}`);
       throw error;
     }
   }
@@ -140,57 +134,29 @@ export default function Home() {
       console.log("Minting successful!");
     } catch (error: unknown) {
       console.error("Error minting NFT:", error);
-      if (error instanceof Error) {
-        setError("Error minting NFT: " + error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
+      setError(`Error minting NFT: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   }
 
-  async function createTokenBoundAccount(tokenId: string) {
-    try {
-      if (!account) {
-        throw new Error("Account is not available");
-      }
-
-      const registryContract = getContract({
-        client,
-        chain: defineChain(84532),
-        address: ERC6551_REGISTRY_ADDRESS,
-      });
-
-      const transaction = await prepareContractCall({
-        contract: registryContract,
-        method: "function createAccount(address implementation, uint256 chainId, address tokenContract, uint256 tokenId, uint256 salt, bytes initData) returns (address)",
-        params: [ERC6551_ACCOUNT_ADDRESS, BigInt(84532), NFT_COLLECTION_ADDRESS, BigInt(tokenId), BigInt(0), "0x"]
-      });
-
-      const { transactionHash } = await sendTransaction({
-        transaction,
-        account
-      });
-
-      console.log("Token-bound account created! Transaction hash:", transactionHash);
-    } catch (error) {
-      console.error("Error creating token-bound account:", error);
-      setError("Error creating token-bound account: " + (error as Error).message);
-    }
-  }
-
-  if (error) {
-    return <div className="text-red-600">{error}</div>;
-  }
 
   const wallets = [
     createWallet("com.coinbase.wallet"),
     createWallet("io.metamask"),
   ];
 
+  const randomizeAvatar = () => {
+    const getRandomItem = (array: any[]) => array[Math.floor(Math.random() * array.length)];
+    setEyeImage(`/avatars/eye/${getRandomItem(['eyes_1.png', 'eyes_2.png'])}`);
+    setMouthImage(`/avatars/mouth/${getRandomItem(['mouth_1.png', 'mouth_2.png'])}`);
+    setHeadImage(`/avatars/head/${getRandomItem(['rabbit.png', 'bull.png'])}`);
+    setTopImage(`/avatars/top/${getRandomItem(['bluetop.png', 'whitetop.png', 'yellowtop.png'])}`);
+    setBackgroundImage(`/avatars/background/${getRandomItem(['background1.png', 'background2.png'])}`);
+  };
+
   return (
     <Container className="min-h-screen flex items-center justify-center">
       <div className="py-20 max-w-xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">Mint your own Avatar NFT:</h2>
+        <h2 className="text-3xl  mb-6 text-center font-lineal">Mint your own Avatar NFT:</h2>
         <input
           type="text"
           placeholder="Name of your NFT"
@@ -199,72 +165,31 @@ export default function Home() {
           required
           onChange={(e) => setNftName(e.target.value)}
         />
-        {creatorName && <p className="text-center mb-4">Created by: {creatorName}</p>}
-        
-        <div className="mb-4">
-          <label>Eye Image:</label>
-          <select value={eyeImage} onChange={(e) => setEyeImage(e.target.value)} className="w-full px-4 py-2 border rounded-md">
-            <option value="/avatars/eye/eyes_1.png">Eyes 1</option>
-            <option value="/avatars/eye/eyes_2.png">Eyes 2</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label>Mouth Image:</label>
-          <select value={mouthImage} onChange={(e) => setMouthImage(e.target.value)} className="w-full px-4 py-2 border rounded-md">
-            <option value="/avatars/mouth/mouth_1.png">Mouth 1</option>
-            <option value="/avatars/mouth/mouth_2.png">Mouth 2</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label>Head Image:</label>
-          <select value={headImage} onChange={(e) => setHeadImage(e.target.value)} className="w-full px-4 py-2 border rounded-md">
-            <option value="/avatars/head/rabbit.png">Rabbit</option>
-            <option value="/avatars/head/bull.png">Bull</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label>Top Image:</label>
-          <select value={topImage} onChange={(e) => setTopImage(e.target.value)} className="w-full px-4 py-2 border rounded-md">
-            <option value="/avatars/top/blue_top.png">Blue Top</option>
-            <option value="/avatars/top/white_top.png">White Top</option>
-            <option value="/avatars/top/yellow_top.png">Yellow Top</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label>Background Image:</label>
-          <select value={backgroundImage} onChange={(e) => setBackgroundImage(e.target.value)} className="w-full px-4 py-2 border rounded-md">
-            <option value="/avatars/background/background1.png">Background 1</option>
-            <option value="/avatars/background/background2.png">Background 2</option>
-            <option value="/avatars/background/background3.png">Background 3</option>
-          </select>
-        </div>
+        {creatorName && <p className="text-center mb-4 font-lineal">Created by: {creatorName}</p>}
 
         <div className="mb-6">
-          <AvatarCanvas 
+          <AvatarCanvas
             eyeImage={eyeImage}
             mouthImage={mouthImage}
             headImage={headImage}
             topImage={topImage}
             backgroundImage={backgroundImage}
-            ref={canvasRef} 
+            ref={canvasRef}
           />
         </div>
 
         <div className="text-center">
+          <button onClick={() => { randomizeAvatar(); }} className="px-6 py-2 bg-blue-600 text-white rounded-md mr-4">
+            Randomize 
+          </button>
           <button onClick={mint} className="px-6 py-2 bg-blue-600 text-white rounded-md">
             Mint NFT
           </button>
         </div>
 
-        {error && <p className="mt-4 text-red-600">{error}</p>}
-
         <div className="mt-6 text-center">
           <a href="https://pg-club.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-           Inventory
+            View Inventory
           </a>
         </div>
       </div>

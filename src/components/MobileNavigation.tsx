@@ -118,7 +118,7 @@ export default function MobileNavigation() {
               >
                 Learn
               </MobileNavLink>
-              <MobileNavLink href="/">My NFTs</MobileNavLink>
+              <MobileNavLink href="/">View Inventory</MobileNavLink>
               <ConnectButton
                 client={client}
                 wallets={wallets}

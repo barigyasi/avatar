@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Lineal';
+  src: url('../styles/fonts/Lineal-Bold.ttf') format('woff2'),
+       url('../styles/fonts/Lineal-Medium.ttf') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -72,5 +81,9 @@
   }
   body {
     @apply bg-background;
+    font-family: 'Lineal', sans-serif; /* Use Lineal font */
+    background-color: var(--background); /* Use your defined variable */
+    color: var(--foreground); /* Use your defined variable */
+    /* Add other styles as needed */
   }
 }
