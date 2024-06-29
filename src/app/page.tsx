@@ -51,7 +51,7 @@ export default function Home() {
 
   const contract = getContract({
     client,
-    chain: defineChain(84532),
+    chain: defineChain(8453),
     address: NFT_COLLECTION_ADDRESS,
   });
 
