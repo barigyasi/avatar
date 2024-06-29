@@ -64,7 +64,7 @@ export function Header() {
             <NavLink 
             href="https://pg-club.netlify.app/"
             target="_blank"
-            > Inventory</NavLink>
+            > View Inventory</NavLink>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">

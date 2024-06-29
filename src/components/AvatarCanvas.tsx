@@ -32,27 +32,40 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const drawImage = (src: string, x: number, y: number, width: number, height: number) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        ctx.drawImage(img, x, y, width, height);
-      };
+    // Load and draw images in sequence to ensure correct layering
+    const loadImage = (src: string): Promise<HTMLImageElement> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => resolve(img);
+      });
     };
 
-    // Scale factor
-    const scaleFactor = 2.5;
+    const drawImages = async () => {
+      const scaleFactor = 2.5;
+      const images = await Promise.all([
+        loadImage(backgroundImage),
+        loadImage(topImage),
+        loadImage(headImage),
+        loadImage(eyeImage),
+        loadImage(mouthImage)
+      ]);
 
-    // Draw images with adjusted positions and sizes in the correct order
-    drawImage(backgroundImage, 0, 0, canvas.width, canvas.height); // Background layer
-    drawImage(topImage, 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Top layer (clothes)
-    drawImage(headImage, 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Head layer
-    drawImage(eyeImage, 115 * scaleFactor, 100 * scaleFactor, 70 * scaleFactor, 35 * scaleFactor); // Eyes layer
-    drawImage(mouthImage, 125 * scaleFactor, 125 * scaleFactor, 50 * scaleFactor, 25 * scaleFactor); // Mouth layer
+      ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height); // Background layer
+      ctx.drawImage(images[1], 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Top layer (clothes)
+      ctx.drawImage(images[2], 75 * scaleFactor, 50 * scaleFactor, 150 * scaleFactor, 150 * scaleFactor); // Head layer
+      ctx.drawImage(images[3], 115 * scaleFactor, 100 * scaleFactor, 70 * scaleFactor, 35 * scaleFactor); // Eyes layer
+      ctx.drawImage(images[4], 125 * scaleFactor, 125 * scaleFactor, 50 * scaleFactor, 25 * scaleFactor); // Mouth layer
+    };
 
+    drawImages();
   }, [eyeImage, mouthImage, headImage, topImage, backgroundImage]);
 
-  return <canvas ref={canvasRef} width={530} height={500} />;
+  return (
+    <div className="avatar-canvas-wrapper w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+      <canvas ref={canvasRef} className="w-full h-auto" width={530} height={500} />
+    </div>
+  );
 });
 
 AvatarCanvas.displayName = 'AvatarCanvas';

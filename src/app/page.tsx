@@ -35,7 +35,6 @@ export default function Home() {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [creatorName, setCreatorName] = useState<string | null>(null);
   const canvasRef = useRef<any>();
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     randomizeAvatar(); // Set initial random avatar images
@@ -138,7 +137,6 @@ export default function Home() {
     }
   }
 
-
   const wallets = [
     createWallet("com.coinbase.wallet"),
     createWallet("io.metamask"),
@@ -156,11 +154,11 @@ export default function Home() {
   return (
     <Container className="min-h-screen flex items-center justify-center">
       <div className="py-20 max-w-xl mx-auto">
-        <h2 className="text-3xl  mb-6 text-center font-lineal">Mint Your Public Goodies:</h2>
+        <h2 className="text-3xl mb-6 text-center font-lineal">Mint Your Public Goodies:</h2>
         <input
           type="text"
           placeholder="Name Your Public Goodie"
-          className="w-full mb-4 px-4 py-2 border rounded-md"
+          className="w-full mb-4 px-4 py-2 border-2 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"
           maxLength={26}
           required
           onChange={(e) => setNftName(e.target.value)}
@@ -179,10 +177,10 @@ export default function Home() {
         </div>
 
         <div className="text-center">
-          <button onClick={() => { randomizeAvatar(); }} className="px-6 py-2 bg-blue-600 text-white rounded-md mr-4">
+          <button onClick={() => { randomizeAvatar(); }} className="px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800 mr-4">
             Randomize 
           </button>
-          <button onClick={mint} className="px-6 py-2 bg-blue-600 text-white rounded-md">
+          <button onClick={mint} className="px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800">
             Mint NFT
           </button>
         </div>
