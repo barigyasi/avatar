@@ -5,7 +5,7 @@ import { generateMintSignature } from 'thirdweb/extensions/erc721';
 import { defineChain } from 'thirdweb/chains';
 
 const client = createThirdwebClient({
-  clientId: "3872c336ba269d320eaa98336bcddf7e"
+  clientId: "67991b945c24524db688cb2f9a366a5b"
 });
 
 const privateKey = process.env.WALLET_PRIVATE_KEY;
@@ -22,8 +22,8 @@ const account = privateKeyToAccount({
 
 const contract = getContract({
   client,
-  chain: defineChain(84532),
-  address: "0x92F2666443EBFa7129f39c9E43758B33CD5D73F8"
+  chain: defineChain(8453),
+  address: "0xF1316D7eC6465BF25d1f918037043D0420270900"
 });
 
 function bigIntToJSON(key: string, value: any) {

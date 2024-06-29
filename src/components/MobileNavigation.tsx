@@ -125,8 +125,8 @@ export default function MobileNavigation() {
                 chain={defineChain(baseSepolia)}
                 theme={"dark"}
                 appMetadata={{
-                  name: "Avatar",
-                  url: "https://example.com",
+                  name: "PGC Members",
+                  url: "https://publicgoods.club",
                 }}
                 connectButton={{ label: "Log In or Sign Up" }}
                 connectModal={{
@@ -135,7 +135,7 @@ export default function MobileNavigation() {
                   welcomeScreen: {
                     title: "PublicGoodsClub",
                     img: {
-                      src: "https://media.discordapp.net/attachments/1244435318006874163/1248808384753434634/PGC_Flower_Logo.png?ex=666502f0&is=6663b170&hm=88b38c7b5a86511dcb2d2e5c6d5c02ecde91dd8a880a65ada02924a5db318d87&=&format=webp&quality=lossless",
+                      src: "/pgc-logo-pgcword.png",
                       width: 150,
                       height: 150,
                     },

@@ -2,19 +2,17 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useActiveAccount, ConnectButton } from "thirdweb/react";
+import { useActiveAccount } from "thirdweb/react";
 import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineChain,  prepareContractCall, sendTransaction } from "thirdweb";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { createWallet } from "thirdweb/wallets";
-import { baseSepolia } from "thirdweb/chains";
 import AvatarCanvas from "../components/AvatarCanvas";
 import { Container } from "../components/Container";
 import { resolveName } from "thirdweb/extensions/ens";
 import { mintWithSignature } from "thirdweb/extensions/erc721";
 
-const NFT_COLLECTION_ADDRESS = "0x92F2666443EBFa7129f39c9E43758B33CD5D73F8";
-const ERC6551_REGISTRY_ADDRESS = "0xF1d73C35BF140c6ad27e1573F67056c3EB0d48E8";
-const ERC6551_ACCOUNT_ADDRESS = "0xE4584236E1C384CDcb541685a5d4E849e3fE15ab";
+const NFT_COLLECTION_ADDRESS = "0xF1316D7eC6465BF25d1f918037043D0420270900";
+
 
 export default function Home() {
   const clientId = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
@@ -38,7 +36,6 @@ export default function Home() {
   const [backgroundImage, setBackgroundImage] = useState<string>("/avatars/background/background1.png");
   const [creatorName, setCreatorName] = useState<string | null>(null);
   const canvasRef = useRef<any>();
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (account?.address) {
@@ -53,7 +50,7 @@ export default function Home() {
 
   const contract = getContract({
     client,
-    chain: defineChain(84532),
+    chain: defineChain(8453),
     address: NFT_COLLECTION_ADDRESS,
   });
 
@@ -148,39 +145,7 @@ export default function Home() {
     }
   }
 
-  async function createTokenBoundAccount(tokenId: string) {
-    try {
-      if (!account) {
-        throw new Error("Account is not available");
-      }
-
-      const registryContract = getContract({
-        client,
-        chain: defineChain(84532),
-        address: ERC6551_REGISTRY_ADDRESS,
-      });
-
-      const transaction = await prepareContractCall({
-        contract: registryContract,
-        method: "function createAccount(address implementation, uint256 chainId, address tokenContract, uint256 tokenId, uint256 salt, bytes initData) returns (address)",
-        params: [ERC6551_ACCOUNT_ADDRESS, BigInt(84532), NFT_COLLECTION_ADDRESS, BigInt(tokenId), BigInt(0), "0x"]
-      });
-
-      const { transactionHash } = await sendTransaction({
-        transaction,
-        account
-      });
-
-      console.log("Token-bound account created! Transaction hash:", transactionHash);
-    } catch (error) {
-      console.error("Error creating token-bound account:", error);
-      setError("Error creating token-bound account: " + (error as Error).message);
-    }
-  }
-
-  if (error) {
-    return <div className="text-red-600">{error}</div>;
-  }
+  
 
   const wallets = [
     createWallet("com.coinbase.wallet"),
