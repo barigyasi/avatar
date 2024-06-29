@@ -1,4 +1,3 @@
-// ThemeToggle.tsx
 "use client";
 import { useTheme } from "next-themes";
 
@@ -45,7 +44,7 @@ export function ThemeToggle() {
       onClick={toggleMode}
     >
       <SunIcon className="h-8 w-8 stroke-slate-900 dark:hidden" />
-      <MoonIcon className="hidden h-8 w-8 stroke-slate-900 dark:block" />
+      <MoonIcon className="hidden h-8 w-8 stroke-white dark:block" /> {/* Adjusted here */}
     </button>
   );
 }

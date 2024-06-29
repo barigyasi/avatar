@@ -32,7 +32,7 @@ export function Header() {
   });
 
   return (
-    <header className="bg-blue-600"> {/* Use Tailwind class for blue background */}
+    <header className="bg-blue-600 dark:bg-black"> {/* Add dark:bg-black */}
       <Container>
         <nav className="relative z-50 flex justify-between items-center p-4 md:pt-4">
           <div className="flex items-center md:gap-x-12 justify-center">

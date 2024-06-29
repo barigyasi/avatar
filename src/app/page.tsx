@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -152,7 +152,7 @@ export default function Home() {
   };
 
   return (
-    <Container className="min-h-screen flex items-center justify-center">
+    <Container className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900"> {/* Add bg-white and dark:bg-gray-900 */}
       <div className="py-20 max-w-xl mx-auto">
         <h2 className="text-3xl mb-6 text-center font-lineal">Mint Your Public Goodies:</h2>
         <input
