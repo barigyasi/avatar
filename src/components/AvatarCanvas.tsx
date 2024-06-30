@@ -109,7 +109,7 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
 
   return (
     <div className="avatar-canvas-wrapper w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl relative">
-      <canvas ref={canvasRef} className="w-full h-auto" width={530} height={500} />
+      <canvas ref={canvasRef} className="w-full h-auto" width={530} height={530} />
     </div>
   );
 });
