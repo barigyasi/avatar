@@ -223,7 +223,7 @@ export default function Home() {
       'blue_suit.png', 'cream_hoodie.png', 'cream_shirt.png', 'degen_suit.png', 
       'gold_shirt.png', 'gold_suit.png', 'green_hoodie.png', 'green_shirt.png', 'green_suit.png', 
       'mint_hoodie.png', 'mint_shirt.png', 'mint_suit.png', 'navy_hoodie.png', 'navy_shirt.png', 
-       'pink_hoodie.png', 'pink_shirt.png', 'pink_suit.png', 'red_hoodie.png', 
+      'pink_hoodie.png', 'pink_shirt.png', 'pink_suit.png', 'red_hoodie.png', 
       'red_shirt.png', 'white_hoodie.png', 'white_shirt.png', 
       'yellow_hoodie.png', 'yellow_shirt.png'])}`);
     setBackgroundImage(`/avatars/background/${getRandomItem(['background1.png', 'background2.png'])}`);
@@ -235,12 +235,12 @@ export default function Home() {
       'pgc_chain_4.png', 'pgc_chain_5.png', 'pgc_chain_6.png', 'pgc_pearls_1.png', 'pgc_pearls_2.png', 
       'pgc_pearls_3.png', 'pgc_pearls_4.png', 'pgc_pearls_5.png', 'pgc_pearls_6.png', 
       'pgc_pearls_7.png', 'pgc_pearls_8.png', 'pgc_pearls_9.png', 'pgc_pearls_10.png', 
-      'pgc_pearls_11.png'])}`);
+      'pgc_pearls_11.png','blank_1.png','blank_2.png'])}`);
     setGlassesImage(`/avatars/glasses/${getRandomItem([
       'blue_nounish.png', 'blue_sunglasses_2.png', 'blue_sunglasses.png', 'cream_nounish.png', 
       'green_sunglasses.png', 'green_nounish.png', 'pink_nounish.png', 'pink_sunglasses_2.png', 
       'pink_sunglasses.png', 'red_nounish.png', 'red_sunglasses.png', 'teal_sunglasses_2.png', 
-      'yellow_sunglasses.png', 'yellow_sunglasses_2.png'])}`);
+      'yellow_sunglasses.png', 'yellow_sunglasses_2.png', 'blank_glasses_1.png','blank_glasses_2.png'])}`);
   };
   
 

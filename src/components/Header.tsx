@@ -56,7 +56,7 @@ export function Header() {
               Community
             </NavLink>
             <NavLink
-              href="https://mirror.xyz/bigtrav.eth/6hD4LTjGWC8TXef4DGIxbdVSibreKLTWila-wOku0DM"
+              href="https://publicgoods.club"
               target="_blank"
             >
               Learn
