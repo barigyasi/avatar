@@ -237,7 +237,7 @@ export default function Home() {
     setGlassesImage(`/avatars/glasses/${getRandomItem([
       'blue_nounish.png', 'blue_sunglasses_2.png', 'blue_sunglasses.png', 'cream_nounish.png', 
       'green_sunglasses.png', 'green_nounish.png', 'pink_nounish.png', 'pink_sunglasses_2.png', 
-      'pink_sunglasses.png', 'red_nounish.png', 'red_sunglasses.png', 'teal_sunglasses_2.png', 
+      'pink_sunglasses.png', 'red_sunglasses.png', 'teal_sunglasses_2.png', 
       'yellow_sunglasses.png', 'yellow_sunglasses_2.png', 'blank_glasses_1.png','blank_glasses_2.png'])}`);
   };
   
