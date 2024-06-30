@@ -23,7 +23,7 @@ const account = privateKeyToAccount({
 const contract = getContract({
   client,
   chain: defineChain(8453),
-  address: "0xF1316D7eC6465BF25d1f918037043D0420270900"
+  address: "0x3917465c972d6c6D4eB4fB0f21E8D5023dDaF3Cf"
 });
 
 function bigIntToJSON(key: string, value: any) {
