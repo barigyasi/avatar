@@ -33,7 +33,7 @@ function bigIntToJSON(key: string, value: any) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      const { authorAddress, nftName, image } = req.body;
+      const { authorAddress, nftName, image, traits } = req.body;
 
       if (!authorAddress) {
         throw new Error("Missing authorAddress");
@@ -45,6 +45,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         throw new Error("Missing image");
       }
 
+      // Check for traits
+      if (!traits) {
+        throw new Error("Missing traits");
+      }
+
       const { payload, signature } = await generateMintSignature({
         account,
         contract,
@@ -54,6 +59,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             name: nftName,
             description: "Public Goods Club",
             image: image,
+            attributes: [
+              { trait_type: "Eyes", value: traits.eye },
+              { trait_type: "Mouth", value: traits.mouth },
+              { trait_type: "Head", value: traits.head },
+              { trait_type: "Top", value: traits.top },
+            ],
           },
           price: "0.0015",
           royaltyRecipient: adminAddress,

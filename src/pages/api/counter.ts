@@ -1,22 +1,29 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { prisma } from '../../components/lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    // Get the current counter value
-    const counter = await prisma.counter.findUnique({ where: { id: 1 } });
-    res.status(200).json({ count: counter?.count || 0 });
-  } else if (req.method === 'POST') {
-    // Increment the counter value
-    const counter = await prisma.counter.upsert({
-      where: { id: 1 },
-      update: { count: { increment: 1 } },
-      create: { id: 1, count: 1 },
-    });
-    res.status(200).json({ count: counter.count });
-  } else {
-    res.status(405).end(); // Method Not Allowed
+  try {
+    if (req.method === 'GET') {
+      const counter = await prisma.counter.findUnique({
+        where: { id: 1 },
+      });
+      res.status(200).json({ count: counter?.count || 0 });
+    } else if (req.method === 'POST') {
+      const updatedCounter = await prisma.counter.update({
+        where: { id: 1 },
+        data: {
+          count: {
+            increment: 1,
+          },
+        },
+      });
+      res.status(200).json({ count: updatedCounter.count });
+    } else {
+      res.setHeader('Allow', ['GET', 'POST']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+  } catch (error) {
+    console.error("Error in /api/counter: ", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }

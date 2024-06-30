@@ -3,15 +3,17 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "prisma:migrate": "prisma migrate deploy",
-  "postinstall": "prisma generate && prisma migrate deploy"
-},
-
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"prisma:migrate": "prisma migrate deploy",
+		"postinstall": "prisma generate && prisma migrate deploy"
+	},
 	"dependencies": {
 		"@coinbase/wallet-sdk": "^4.0.3",
+		"@fortawesome/fontawesome-svg-core": "^6.5.2",
+		"@fortawesome/free-solid-svg-icons": "^6.5.2",
+		"@fortawesome/react-fontawesome": "^0.2.2",
 		"@headlessui/react": "^2.1.1",
 		"@headlessui/tailwindcss": "^0.2.1",
 		"@mui/material": "^5.15.19",

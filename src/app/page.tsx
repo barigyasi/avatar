@@ -10,6 +10,8 @@ import { resolveName } from "thirdweb/extensions/ens";
 import { mintWithSignature } from "thirdweb/extensions/erc721";
 import AvatarCanvas from "../components/AvatarCanvas";
 import { Container } from "../components/Container";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShuffle } from '@fortawesome/free-solid-svg-icons';
 
 const NFT_COLLECTION_ADDRESS = "0xF1316D7eC6465BF25d1f918037043D0420270900";
 
@@ -107,6 +109,12 @@ export default function Home() {
           authorAddress: wallet,
           nftName: nftName || "",
           image: imageUrl,
+          traits: {
+            eye: eyeImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+            mouth: mouthImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+            head: headImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+            top: topImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+          },
         }),
       });
       if (!response.ok) {
@@ -248,10 +256,10 @@ export default function Home() {
   return (
     <Container className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
       <div className="py-20 max-w-xl mx-auto px-4">
-        <h2 className="text-3xl mb-6 text-center font-lineal">Mint Your Public Goodies:</h2>
+        <h2 className="text-3xl mb-6 text-center font-lineal">Mint Your Member:</h2>
         <input
           type="text"
-          placeholder="Name Your Public Goodie"
+          placeholder="Name Your PGC Member"
           className="w-full mb-4 px-4 py-2 border-2 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"
           maxLength={26}
           required
@@ -273,10 +281,10 @@ export default function Home() {
 
         <div className="text-center">
           <button onClick={randomizeAvatar} disabled={loading} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800 mr-4 randomize-button">
-            Randomize
+            <FontAwesomeIcon icon={faShuffle} />
           </button>
           <button onClick={mint} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800">
-            Mint NFT
+            Mint
           </button>
         </div>
 
