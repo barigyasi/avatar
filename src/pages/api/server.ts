@@ -64,6 +64,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               { trait_type: "Mouth", value: traits.mouth },
               { trait_type: "Head", value: traits.head },
               { trait_type: "Top", value: traits.top },
+              { trait_type: "Chain", value: traits.chain },
+              { trait_type: "Glasses", value: traits.glasses },
             ],
           },
           price: "0.0015",

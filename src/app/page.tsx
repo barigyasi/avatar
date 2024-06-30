@@ -35,6 +35,9 @@ export default function Home() {
   const [headImage, setHeadImage] = useState<string>("");
   const [topImage, setTopImage] = useState<string>("");
   const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const [chainImage, setChainImage] = useState<string>("");
+  const [glassesImage, setGlassesImage] = useState<string>("");
+
   const [creatorName, setCreatorName] = useState<string | null>(null);
   const [clickCount, setClickCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -114,6 +117,12 @@ export default function Home() {
             mouth: mouthImage.split('/').pop()?.split('.')[0].replace('_', ' '),
             head: headImage.split('/').pop()?.split('.')[0].replace('_', ' '),
             top: topImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+            chain: chainImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+            glasses: glassesImage.split('/').pop()?.split('.')[0].replace('_', ' '),
+
+            
+
+
           },
         }),
       });
@@ -192,12 +201,48 @@ export default function Home() {
   const getRandomItem = (array: any[]) => array[Math.floor(Math.random() * array.length)];
 
   const initializeAvatar = () => {
-    setEyeImage(`/avatars/eye/${getRandomItem(['eyes_1.png', 'eyes_2.png'])}`);
-    setMouthImage(`/avatars/mouth/${getRandomItem(['mouth_1.png', 'mouth_2.png'])}`);
-    setHeadImage(`/avatars/head/${getRandomItem(['rabbit.png', 'bull.png'])}`);
-    setTopImage(`/avatars/top/${getRandomItem(['bluetop.png', 'whitetop.png', 'yellowtop.png'])}`);
+    setEyeImage(`/avatars/eye/${getRandomItem([
+      'eyes_1.png', 'eyes_2.png', 'eyes_3.png', 'eyes_4.png', 'eyes_5.png', 'eyes_6.png', 
+      'eyes_7.png', 'eyes_8.png', 'eyes_9.png', 'eyes_10.png', 'eyes_11.png', 'eyes_12.png', 
+      'eyes_13.png'])}`);
+    setMouthImage(`/avatars/mouth/${getRandomItem([
+      'mouth_1.png', 'mouth_2.png', 'mouth_3.png', 'mouth_4.png', 'mouth_5.png', 'mouth_6.png', 
+      'mouth_7.png'])}`);
+    setHeadImage(`/avatars/head/${getRandomItem([
+      'baby_blue_bull.png', 'baby_blue_rabbit.png', 'baby_blue_shiba.png', 'based_cat.png', 
+      'blue_ape.png', 'blue_bear.png', 'blue_bull.png', 'blue_cat.png', 'blue_rabbit.png', 
+      'blue_shiba.png', 'brown_bull.png', 'brown_shiba.png', 'cream_bear.png', 'cream_cat.png', 
+      'doge.png', 'gold_ape.png', 'gold_bear.png', 'gold_bull.png', 'green_ape.png', 
+      'green_bull.png', 'green_rabbit.png', 'green_shiba.png', 'milo.png', 'mint_ape.png', 
+      'mint_bear.png', 'mint_bull.png', 'mint_cat.png', 'orange_cat.png', 'panda_bear.png', 
+      'pink_ape.png', 'pink_rabbit.png', 'pink_shiba.png', 'polar_bear.png', 'red_ape.png', 
+      'red_bear.png', 'red_bull.png', 'red_cat.png', 'red_rabbit.png', 'red_shiba.png', 'winnie.png', 
+      'yellow_cat.png', 'yellow_rabbit.png'])}`);
+    setTopImage(`/avatars/top/${getRandomItem([
+      'baby_blue_hoodie.png', 'baby_blue_suit.png', 'blue_hoodie.png', 'blue_shirt.png', 
+      'blue_suit.png', 'cream_hoodie.png', 'cream_shirt.png', 'degen_suit.png', 
+      'gold_shirt.png', 'gold_suit.png', 'green_hoodie.png', 'green_shirt.png', 'green_suit.png', 
+      'mint_hoodie.png', 'mint_shirt.png', 'mint_suit.png', 'navy_hoodie.png', 'navy_shirt.png', 
+       'pink_hoodie.png', 'pink_shirt.png', 'pink_suit.png', 'red_hoodie.png', 
+      'red_shirt.png', 'white_hoodie.png', 'white_shirt.png', 
+      'yellow_hoodie.png', 'yellow_shirt.png'])}`);
     setBackgroundImage(`/avatars/background/${getRandomItem(['background1.png', 'background2.png'])}`);
+    setChainImage(`/avatars/chains/${getRandomItem([
+      '2_chains_blue.png', '2_chains_gold.png', '2_chains_mint.png', '2_chains_white.png', 
+      'cuban_link_blue.png', 'cuban_link_gold.png', 'cuban_link_mint.png', 'cuban_link_white.png', 
+      'herringbone_blue.png', 'herringbone_gold.png', 'herringbone_mint.png', 'herringbone_pink.png', 
+      'herringbone_white.png', 'pgc_chain_1.png', 'pgc_chain_2.png', 'pgc_chain_3.png', 
+      'pgc_chain_4.png', 'pgc_chain_5.png', 'pgc_chain_6.png', 'pgc_pearls_1.png', 'pgc_pearls_2.png', 
+      'pgc_pearls_3.png', 'pgc_pearls_4.png', 'pgc_pearls_5.png', 'pgc_pearls_6.png', 
+      'pgc_pearls_7.png', 'pgc_pearls_8.png', 'pgc_pearls_9.png', 'pgc_pearls_10.png', 
+      'pgc_pearls_11.png'])}`);
+    setGlassesImage(`/avatars/glasses/${getRandomItem([
+      'blue_nounish.png', 'blue_sunglasses_2.png', 'blue_sunglasses.png', 'cream_nounish.png', 
+      'green_sunglasses.png', 'green_nounish.png', 'pink_nounish.png', 'pink_sunglasses_2.png', 
+      'pink_sunglasses.png', 'red_nounish.png', 'red_sunglasses.png', 'teal_sunglasses_2.png', 
+      'yellow_sunglasses.png', 'yellow_sunglasses_2.png'])}`);
   };
+  
 
   const safelyInteractWithElement = (selector: string, callback: (element: HTMLElement) => void) => {
     const element = document.querySelector(selector) as HTMLElement | null;
@@ -270,9 +315,11 @@ export default function Home() {
 
         <div className="mb-6 flex justify-center">
           <AvatarCanvas
+            glassesImage={glassesImage}
             eyeImage={eyeImage}
             mouthImage={mouthImage}
             headImage={headImage}
+            chainImage={chainImage}
             topImage={topImage}
             backgroundImage={backgroundImage}
             ref={canvasRef}
