@@ -44,6 +44,7 @@ export default function Home() {
   const [buttonPresses, setButtonPresses] = useState<number>(0);
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
+  const [canvasLoading, setCanvasLoading] = useState<boolean>(false);
   const canvasRef = useRef<any>();
 
   useEffect(() => {
@@ -119,9 +120,6 @@ export default function Home() {
             top: topImage.split('/').pop()?.split('.')[0].replace('_', ' '),
             chain: chainImage.split('/').pop()?.split('.')[0].replace('_', ' '),
             glasses: glassesImage.split('/').pop()?.split('.')[0].replace('_', ' '),
-
-            
-
 
           },
         }),
@@ -252,6 +250,7 @@ export default function Home() {
   };
 
   const randomizeAvatar = () => {
+    setCanvasLoading(true);
     initializeAvatar();
     incrementClickCount();
     setButtonPresses((prev) => prev + 1);
@@ -313,7 +312,10 @@ export default function Home() {
         />
         {creatorName && <p className="text-center mb-4 font-lineal">minted by: {creatorName}</p>}
 
-        <div className="mb-6 flex justify-center">
+        <div className="mb-6 flex justify-center relative">
+          {canvasLoading && (
+            <img src="/pgc-logo-light2.png" alt="Loading..." className="absolute w-full h-auto z-10" />
+          )}
           <AvatarCanvas
             glassesImage={glassesImage}
             eyeImage={eyeImage}
@@ -323,6 +325,7 @@ export default function Home() {
             topImage={topImage}
             backgroundImage={backgroundImage}
             ref={canvasRef}
+            setLoading={setCanvasLoading}
           />
         </div>
 
