@@ -13,7 +13,7 @@ import { Container } from "../components/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShuffle } from '@fortawesome/free-solid-svg-icons';
 
-const NFT_COLLECTION_ADDRESS = "0xF1316D7eC6465BF25d1f918037043D0420270900";
+const NFT_COLLECTION_ADDRESS = "0x3917465c972d6c6D4eB4fB0f21E8D5023dDaF3Cf";
 
 export default function Home() {
   const clientId = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
