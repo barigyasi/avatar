@@ -45,10 +45,6 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
 
     const drawImages = async () => {
       setLoading(true);  // Notify the parent component that loading has started
-      const scaleFactor = 2.5;
-      const eyeScaleFactor = 1.5; // Adjusted scale factor for the eyes
-      const mouthScaleFactor = 2.5; // Adjusted scale factor for the mouth
-      const glassesScaleFactor = 2.0; // Adjusted scale factor for the glasses
 
       const images = await Promise.all([
         loadImage(backgroundImage),
@@ -63,84 +59,48 @@ const AvatarCanvas = forwardRef(({ eyeImage, mouthImage, headImage, topImage, ba
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
 
-      const coords = {
-        topImageX: 0, 
-        topImageY: 155, 
-        headX: 0, 
-        headY: 20, 
-        eyeX: 0, 
-        eyeY: 80, 
-        mouthX: 0, 
-        mouthY: 100, 
-        chainX: 0, 
-        chainY: 150, 
-        glassesX: 0, 
-        glassesY: 90 
+      const scaleToFit = (imgWidth: number, imgHeight: number) => {
+        const aspectRatio = imgWidth / imgHeight;
+        if (canvasWidth / aspectRatio < canvasHeight) {
+          return { width: canvasWidth, height: canvasWidth / aspectRatio };
+        } else {
+          return { width: canvasHeight * aspectRatio, height: canvasHeight };
+        }
       };
 
-      const headWidth = 200 * scaleFactor;
-      const headHeight = 200 * scaleFactor;
-      let headX = (canvasWidth - headWidth) / 2 + coords.headX;
-      let headY = (canvasHeight - headHeight) / 2 + coords.headY;
+      const backgroundSize = scaleToFit(images[0].width, images[0].height);
+      const topImageSize = scaleToFit(images[1].width, images[1].height);
+      const chainSize = scaleToFit(images[2].width, images[2].height);
+      const headSize = scaleToFit(images[3].width, images[3].height);
+      const eyeSize = scaleToFit(images[4].width, images[4].height);
+      const mouthSize = scaleToFit(images[5].width, images[5].height);
+      const glassesSize = scaleToFit(images[6].width, images[6].height);
 
-      if (headImage.includes('rabbit')) {
-        headY -= 30;
-      }
+      // Coordinates zeroed out
+      const coords = {
+        topImageX: 0, 
+        topImageY: 0, 
+        headX: 0, 
+        headY: 0, 
+        eyeX: 0, 
+        eyeY: 0, 
+        mouthX: 0, 
+        mouthY: 0, 
+        chainX: 0, 
+        chainY: 0, 
+        glassesX: 0, 
+        glassesY: 0 
+      };
 
-      const topImageWidth = 200 * scaleFactor;
-      const topImageHeight = 200 * scaleFactor;
-      const topImageX = (canvasWidth - topImageWidth) / 2 + coords.topImageX;
-      const topImageY = canvasHeight - topImageHeight + coords.topImageY;
+      // Drawing images with scaling to fit the canvas
+      ctx.drawImage(images[0], coords.topImageX, coords.topImageY, backgroundSize.width, backgroundSize.height); // Background layer
+      ctx.drawImage(images[1], coords.topImageX, coords.topImageY, topImageSize.width, topImageSize.height); // Top layer (clothes)
+      ctx.drawImage(images[2], coords.chainX, coords.chainY, chainSize.width, chainSize.height); // Chains layer
+      ctx.drawImage(images[3], coords.headX, coords.headY, headSize.width, headSize.height); // Head layer
+      ctx.drawImage(images[4], coords.eyeX, coords.eyeY, eyeSize.width, eyeSize.height); // Eyes layer
+      ctx.drawImage(images[5], coords.mouthX, coords.mouthY, mouthSize.width, mouthSize.height); // Mouth layer
+      ctx.drawImage(images[6], coords.glassesX, coords.glassesY, glassesSize.width, glassesSize.height); // Glasses layer
 
-      ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height);
-      ctx.drawImage(images[1], topImageX, topImageY, topImageWidth, topImageHeight);
-
-      const chainWidth = 200 * scaleFactor;
-      const chainHeight = 200 * scaleFactor;
-      const chainX = (canvasWidth - chainWidth) / 2 + coords.chainX;
-      const chainY = canvasHeight - chainHeight + coords.chainY;
-      ctx.drawImage(images[2], chainX, chainY, chainWidth, chainHeight);
-
-      ctx.drawImage(images[3], headX, headY, headWidth, headHeight);
-
-      const eyeOriginalWidth = 90 * scaleFactor;
-      const eyeOriginalHeight = 55 * scaleFactor;
-      const eyeWidth = eyeOriginalWidth * eyeScaleFactor;
-      const eyeHeight = eyeOriginalHeight * eyeScaleFactor;
-      const eyeX = headX + (headWidth - eyeWidth) / 2 + coords.eyeX;
-      let eyeY = headY + 40 + coords.eyeY;
-
-      if (headImage.includes('rabbit')) {
-        eyeY += 10;
-      }
-
-      ctx.drawImage(images[4], eyeX, eyeY, eyeWidth, eyeHeight);
-
-      const mouthOriginalWidth = 70 * scaleFactor;
-      const mouthOriginalHeight = 45 * scaleFactor;
-      const mouthWidth = mouthOriginalWidth * mouthScaleFactor;
-      const mouthHeight = mouthOriginalHeight * mouthScaleFactor;
-      const mouthX = headX + (headWidth - mouthWidth) / 2 + coords.mouthX;
-      let mouthY = headY + 90 + coords.mouthY;
-
-      if (headImage.includes('rabbit')) {
-        mouthY += 30;
-      }
-
-      ctx.drawImage(images[5], mouthX, mouthY, mouthWidth, mouthHeight);
-
-      const glassesOriginalWidth = 70 * scaleFactor;
-      const glassesOriginalHeight = 45 * scaleFactor;
-      const glassesWidth = glassesOriginalWidth * glassesScaleFactor;
-      const glassesHeight = glassesOriginalHeight * glassesScaleFactor;
-      const glassesX = headX + (headWidth - glassesWidth) / 2 + coords.glassesX;
-      let glassesY = headY + 30 + coords.glassesY;
-
-      if (headImage.includes('rabbit')) {
-        glassesY += 10;
-      }
-
-      ctx.drawImage(images[6], glassesX, glassesY, glassesWidth, glassesHeight);
       setLoading(false);  // Notify the parent component that loading has ended
     };
 

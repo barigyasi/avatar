@@ -224,7 +224,7 @@ export default function Home() {
       'pink_hoodie.png', 'pink_shirt.png', 'pink_suit.png', 'red_hoodie.png', 
       'red_shirt.png', 'white_hoodie.png', 'white_shirt.png', 
       'yellow_hoodie.png', 'yellow_shirt.png'])}`);
-    setBackgroundImage(`/avatars/background/${getRandomItem(['background1.png', 'background2.png'])}`);
+    setBackgroundImage(`/avatars/background/${getRandomItem([ 'blue_background.png'])}`);
     setChainImage(`/avatars/chains/${getRandomItem([
       '2_chains_blue.png', '2_chains_gold.png', '2_chains_mint.png', '2_chains_white.png', 
       'cuban_link_blue.png', 'cuban_link_gold.png', 'cuban_link_mint.png', 'cuban_link_white.png', 
@@ -300,7 +300,7 @@ export default function Home() {
   return (
     <Container className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
       <div className="py-20 max-w-xl mx-auto px-4">
-        <h2 className="text-3xl mb-6 text-center font-lineal">Mint Your Member:</h2>
+        <h2 className="text-3xl mb-6 text-center font-lineal">Mint A Member:</h2>
         <input
           type="text"
           placeholder="Name Your PGC Member"
@@ -314,7 +314,7 @@ export default function Home() {
 
         <div className="mb-6 flex justify-center relative">
           {canvasLoading && (
-            <img src="/pgc-logo-light2.png" alt="Loading..." className="absolute w-full h-auto z-10" />
+            <img src="/PGC_Flower_ALL_BLUE.png" alt="Loading..." className="spinner1" />
           )}
           <AvatarCanvas
             glassesImage={glassesImage}
@@ -342,7 +342,7 @@ export default function Home() {
           {loading ? (
             <img src="/PGC_Flower_ALL_BLUE.png" alt="Loading..." className="spinner" />
           ) : (
-            <p>Randomizer clicks: {clickCount}</p>
+            <p>Shuffles: {clickCount}</p>
           )}
         </div>
 
