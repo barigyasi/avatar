@@ -224,7 +224,7 @@ export default function Home() {
       'pink_hoodie.png', 'pink_shirt.png', 'pink_suit.png', 'red_hoodie.png', 
       'red_shirt.png', 'white_hoodie.png', 'white_shirt.png', 
       'yellow_hoodie.png', 'yellow_shirt.png'])}`);
-    setBackgroundImage(`/avatars/background/${getRandomItem([ 'blue_background.png'])}`);
+    setBackgroundImage(`/avatars/background/${getRandomItem([ 'blue_background.png', 'baby_blue_background.png','gold_background.png', 'green_background.png','mint_background.png','pink_background.png'])}`);
     setChainImage(`/avatars/chains/${getRandomItem([
       '2_chains_blue.png', '2_chains_gold.png', '2_chains_mint.png', '2_chains_white.png', 
       'cuban_link_blue.png', 'cuban_link_gold.png', 'cuban_link_mint.png', 'cuban_link_white.png', 
