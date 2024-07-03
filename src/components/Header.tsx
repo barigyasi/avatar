@@ -1,4 +1,3 @@
-// /app/components/Header.tsx
 "use client";
 import { Container } from "./Container";
 import { NavLink } from "./NavLink";
@@ -7,7 +6,7 @@ import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "next-themes";
 import MobileNavigation from "./MobileNavigation";
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { base } from "thirdweb/chains";
 import { createThirdwebClient, defineChain } from "thirdweb";
@@ -21,6 +20,7 @@ const wallets = [
 
 export function Header() {
   const { theme } = useTheme();
+  const account = useActiveAccount();
 
   if (!CLIENT_ID) {
     throw new Error("CLIENT_ID is not defined in environment variables");
@@ -32,7 +32,7 @@ export function Header() {
   });
 
   return (
-    <header className="bg-blue-600 dark:bg-black"> {/* Add dark:bg-black */}
+    <header className="bg-blue-600 dark:bg-black">
       <Container>
         <nav className="relative z-50 flex justify-between items-center p-4 md:pt-4">
           <div className="flex items-center md:gap-x-12 justify-center">
@@ -62,38 +62,41 @@ export function Header() {
               Learn
             </NavLink>
             <NavLink 
-            href="https://pg-club.netlify.app/"
-            target="_blank"
-            > View Inventory</NavLink>
+              href="https://pg-club.netlify.app/"
+              target="_blank"
+            >
+              View Inventory
+            </NavLink>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="hidden md:block">
-              {/* <ConnectWallet  switchToActiveChain={true} /> */}
-              <ConnectButton
-                client={client}
-                wallets={wallets}
-                chain={defineChain(base)}
-                theme={"dark"}
-                appMetadata={{
-                  name: "Avatar",
-                  url: "https://example.com",
-                }}
-                connectButton={{ label: "Log In or Sign Up" }}
-                connectModal={{
-                  size: "wide",
-                  title: "Choose Method",
-                  welcomeScreen: {
-                    title: "PublicGoodsClub",
-                    img: {
-                      src: "https://media.discordapp.net/attachments/1244435318006874163/1248808384753434634/PGC_Flower_Logo.png?ex=666502f0&is=6663b170&hm=88b38c7b5a86511dcb2d2e5c6d5c02ecde91dd8a880a65ada02924a5db318d87&=&format=webp&quality=lossless",
-                      width: 150,
-                      height: 150,
+            {account?.address ? (
+              <div className="hidden md:block">
+                <ConnectButton
+                  client={client}
+                  wallets={wallets}
+                  chain={defineChain(base)}
+                  theme={"dark"}
+                  appMetadata={{
+                    name: "Avatar",
+                    url: "https://example.com",
+                  }}
+                  connectButton={{ label: "Log In or Sign Up" }}
+                  connectModal={{
+                    size: "wide",
+                    title: "Choose Method",
+                    welcomeScreen: {
+                      title: "PublicGoodsClub",
+                      img: {
+                        src: "https://media.discordapp.net/attachments/1244435318006874163/1248808384753434634/PGC_Flower_Logo.png?ex=666502f0&is=6663b170&hm=88b38c7b5a86511dcb2d2e5c6d5c02ecde91dd8a880a65ada02924a5db318d87&=&format=webp&quality=lossless",
+                        width: 150,
+                        height: 150,
+                      },
                     },
-                  },
-                  showThirdwebBranding: false,
-                }}
-              />
-            </div>
+                    showThirdwebBranding: false,
+                  }}
+                />
+              </div>
+            ) : null}
             <ThemeToggle />
             <div className="-mr-1 md:hidden">
               <MobileNavigation />

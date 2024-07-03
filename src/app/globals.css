@@ -97,6 +97,14 @@
   animation: spin 1s linear infinite;
 }
 
+.spinner3 {
+  width: 25px; /* Adjust the size as needed */
+  height: 25px; /* Adjust the size as needed */
+  margin: auto;
+  display: block;
+  animation: spin 1s linear infinite;
+}
+
 .spinner1-container {
   position: relative;
   width: 100%;
@@ -205,4 +213,15 @@
     width: 100%;
     margin-bottom: 1rem;
   }
+}
+
+@keyframes flash {
+  0% { background-color: red; }
+  33% { background-color: white; color: black; border-color: black; }
+  66% { background-color: blue; }
+  100% { background-color: red; }
+}
+
+.connect-button-flash {
+  animation: flash 1.5s infinite;
 }

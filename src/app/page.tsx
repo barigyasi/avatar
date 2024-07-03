@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useActiveAccount } from "thirdweb/react";
-import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineChain, prepareContractCall, sendTransaction } from "thirdweb";
+import { useActiveAccount, ConnectButton } from "thirdweb/react";
+import { getContract, sendAndConfirmTransaction, createThirdwebClient, defineChain } from "thirdweb";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { createWallet } from "thirdweb/wallets";
 import { resolveName } from "thirdweb/extensions/ens";
@@ -42,6 +42,7 @@ export default function Home() {
   const [clickCount, setClickCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [buttonPresses, setButtonPresses] = useState<number>(0);
+  const [minting, setMinting] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const [canvasLoading, setCanvasLoading] = useState<boolean>(false);
@@ -120,7 +121,6 @@ export default function Home() {
             top: topImage.split('/').pop()?.split('.')[0].replace('_', ' '),
             chain: chainImage.split('/').pop()?.split('.')[0].replace('_', ' '),
             glasses: glassesImage.split('/').pop()?.split('.')[0].replace('_', ' '),
-
           },
         }),
       });
@@ -140,6 +140,8 @@ export default function Home() {
 
   async function mint() {
     try {
+      setMinting(true); // Start the minting process
+
       if (!wallet) {
         throw new Error("Wallet address is not available");
       }
@@ -188,6 +190,8 @@ export default function Home() {
       setError(`Error minting NFT: ${error instanceof Error ? error.message : "Unknown error"}`);
       setShowError(true);
       setTimeout(() => setShowError(false), 15000);
+    } finally {
+      setMinting(false); // End the minting process
     }
   }
 
@@ -240,7 +244,6 @@ export default function Home() {
       'pink_sunglasses.png', 'red_sunglasses.png', 'teal_sunglasses_2.png', 
       'yellow_sunglasses.png', 'yellow_sunglasses_2.png', 'blank_glasses_1.png','blank_glasses_2.png'])}`);
   };
-  
 
   const safelyInteractWithElement = (selector: string, callback: (element: HTMLElement) => void) => {
     const element = document.querySelector(selector) as HTMLElement | null;
@@ -333,9 +336,46 @@ export default function Home() {
           <button onClick={randomizeAvatar} disabled={loading} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800 mr-4 randomize-button">
             <FontAwesomeIcon icon={faShuffle} />
           </button>
-          <button onClick={mint} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800">
-            Mint
-          </button>
+          {account?.address ? (
+            <button onClick={mint} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800" disabled={minting}>
+              {minting ? <img src="/pgc-logo-light.png" alt="Minting..." className="spinner3" /> : "Mint"}
+            </button>
+          ) : (
+            <ConnectButton
+              client={client}
+              wallets={wallets}
+              chain={defineChain(8453)}
+              theme={"dark"}
+              appMetadata={{
+                name: "Avatar",
+                url: "https://example.com",
+              }}
+              connectButton={{
+                label: "Log In or Sign Up",
+                style: {
+                  animation: "flash 1.5s infinite",
+                  padding: "10px 20px",
+                  borderRadius: "5px",
+                  border: "2px solid black",
+                  color: "black",
+                  backgroundColor: "white",
+                },
+              }}
+              connectModal={{
+                size: "wide",
+                title: "Choose Method",
+                welcomeScreen: {
+                  title: "PublicGoodsClub",
+                  img: {
+                    src: "/PGC_Flower_ALL_BLUE.png", // Path to the image in the public folder
+                    width: 150,
+                    height: 150,
+                  },
+                },
+                showThirdwebBranding: false,
+              }}
+            />
+          )}
         </div>
 
         <div className="mt-6 text-center">
