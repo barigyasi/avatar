@@ -187,7 +187,15 @@ export default function Home() {
       setTimeout(() => setShowNotification(false), 3000);
     } catch (error: unknown) {
       console.error("Error minting NFT:", error);
-      setError(`Error minting NFT: ${error instanceof Error ? error.message : "Unknown error"}`);
+      let errorMessage = "Insufficient funds. Please check your balance and try again.";
+      if (error instanceof Error) {
+        if (error.message.includes("insufficient funds for gas * price + value:")) {
+          errorMessage = "Insufficient funds. Please check your balance and try again.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      setError(`Error minting NFT: ${errorMessage}`);
       setShowError(true);
       setTimeout(() => setShowError(false), 15000);
     } finally {
@@ -300,6 +308,8 @@ export default function Home() {
     }
   };
 
+  const chain = defineChain(8453)
+
   return (
     <Container className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
       <div className="py-20 max-w-xl mx-auto px-4">
@@ -338,13 +348,13 @@ export default function Home() {
           </button>
           {account?.address ? (
             <button onClick={mint} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md border-2 border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800" disabled={minting}>
-              {minting ? <img src="/pgc-logo-light.png" alt="Minting..." className="spinner3" /> : "Mint"}
+              {minting ? <img src="/PGC_Flower_ALL_BLUE.png" alt="Minting..." className="spinner3" /> : "Mint"}
             </button>
           ) : (
             <ConnectButton
               client={client}
               wallets={wallets}
-              chain={defineChain(8453)}
+              chain={chain}
               theme={"dark"}
               appMetadata={{
                 name: "Avatar",

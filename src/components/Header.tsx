@@ -12,7 +12,7 @@ import { base } from "thirdweb/chains";
 import { createThirdwebClient, defineChain } from "thirdweb";
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
-
+const chain = defineChain(8453)
 const wallets = [
   createWallet("com.coinbase.wallet"),
   createWallet("io.metamask"),
@@ -74,7 +74,7 @@ export function Header() {
                 <ConnectButton
                   client={client}
                   wallets={wallets}
-                  chain={defineChain(base)}
+                  chain={chain}
                   theme={"dark"}
                   appMetadata={{
                     name: "Avatar",
